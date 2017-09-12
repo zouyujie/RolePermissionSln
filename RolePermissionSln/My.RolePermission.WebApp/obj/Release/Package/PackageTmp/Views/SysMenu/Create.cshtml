@@ -1,0 +1,160 @@
+﻿@model My.RolePermission.Model.SMMENUTB
+@using My.RolePermission.BLL;
+@using My.RolePermission.Common;
+@using My.RolePermission.Common.HtmlHelpers;
+@{
+    ViewBag.SubTitle = "菜单 创建";
+    Layout = "~/Views/Shared/Save.cshtml";
+}
+@Html.ValidationSummary(true, "菜单创建不成功. 请编辑后重试")
+@using (Html.BeginForm((string)ViewBag.FormAction, "SysMenu",FormMethod.Post,new {id = "form1" }))
+{ 
+    <table id="tbCreate" class="usertableborder" align="center">
+        <tr class="usertablerow1">
+            <td class="_width">
+                @Html.LabelFor(model => model.NAME)
+            </td>
+            <td>
+                <input type="text" name="NAME" class="easyui-validatebox" required="true" missingmessage="不能为空"
+                    validtype="length[0,200]" invalidmessage="长度不可超过200" />
+            </td>
+            <td class="_width">
+                <a class="anUnderLine" onclick="showModalOnly('PARENTID','/SysMenu');">
+                    @Html.LabelFor(model => model.PARENTID)
+                </a>
+            </td>
+            <td class="width5">
+                <div id="checkPARENTID">
+                </div>
+                @Html.HiddenFor(model => model.PARENTID)
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td>
+                @Html.LabelFor(model => model.URL)
+            </td>
+            <td>
+                <input type="text" name="URL" class="easyui-validatebox" validtype="length[0,200]"
+                    invalidmessage="长度不可超过200" />
+            </td>
+            <td>
+                <a class="anUnderLine" onclick="showMyWindow('选择图标', '/Home/Iconic');">
+                    @Html.LabelFor(model => model.ICONIC)
+                </a>
+            </td>
+            <td>
+                <div id="Icon">
+                </div>
+                @Html.HiddenFor(model => model.ICONIC)
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+            <td>
+                @Html.LabelFor(model => model.SORT)
+            </td>
+            <td>
+                <input type="text" name="SORT" class="easyui-numberbox" max="2147483646" invalidmessage="数值超出范围" />
+            </td>
+            <td>
+                @Html.LabelFor(model => model.STATE)
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.STATE, SelectListClass.GetStatus(true))
+            </td>
+        </tr>
+        <tr  class="usertablerow2" style="height:30px;"><td> @Html.LabelFor(model => model.ISLEAF)</td><td colspan="3">@Html.RadioButtonListFor(model => model.ISLEAF, SelectListClass.GetYesOrNo(false))</td></tr>
+        <tr  class="usertablerow1">
+            <td>
+                @Html.LabelFor(model => model.REMARK)
+            </td>
+            <td colspan="2" style="word-break: break-all; overflow-x: hidden;" class="remark">
+                <textarea cols="30" name="REMARK" rows="3" class="easyui-validatebox" validtype="length[0,200]"
+                    invalidmessage="长度不可超过200"></textarea>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td>
+                <a class="anUnderLine" onclick="showModalMany('SysOperationId','/SysOperation?view=1');">
+                @Html.LabelFor(model => model.SysOperationId)</a>
+            </td>
+            <td colspan="3">
+                <div class="selectList">
+                    <ul id="checkSysOperationId">
+                        @if (Model != null && !string.IsNullOrWhiteSpace(Model.SysOperationId))
+                        {
+                            foreach (var item13 in Model.SysOperationId.Split('^'))
+                            {
+                                string[] it = item13.Split('&');
+                                if (it != null && it.Length == 2 && !string.IsNullOrWhiteSpace(it[0]) && !string.IsNullOrWhiteSpace(it[1]))
+                                {                        
+                            <li  id="@item13">
+                                <img alt="删除" title="点击删除" onclick="deleteTable('@item13 ','SysOperationId');"
+                                    src="/Content/Images/deleteimge.png" />
+                                @it[1]</li>
+                                }
+                            }
+                        }
+                    </ul>
+                    @Html.HiddenFor(model => model.SysOperationId)
+                </div>
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+            <td colspan="4" style="text-align: center; height: 30px;">
+                 <a href='#' onclick='$("form").submit()' class="easyui-linkbutton" data-options="iconCls:'icon-add'">
+                    添加</a>
+                                                    <a href='#' onclick="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'"> 重置</a> 
+                <a href='#' onclick="javascript:formClose();" class="easyui-linkbutton" data-options="iconCls:'icon-undo'"> 取消</a>
+            </td>
+        </tr>
+    </table>   
+}
+<div id="myWindow">
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function tu(tuclass) {
+            $('#Icon').panel({
+                iconCls: tuclass
+                    , title: '您选择的图标'
+                    , width: 180
+            });
+            $('#ICONIC').val(tuclass);
+
+            $('#myWindow').window('close');
+        }
+        function showMyWindow(title, href, width, height, modal, minimizable, maximizable) {
+
+            var icons = "";
+            var flag = 19.6;
+            for (var i = 1; i <= 26; i++) {
+                var i0 = i < 10 ? "0" + i : i;
+                for (var j = 1; j <= 20; j++) {
+                    var j0 = j < 10 ? "0" + j : j;
+                    icons += '<area shape="rect" coords="' + (j - 1) * flag + ',' + (i - 1) * flag + ',' + j * flag + ',' + i * flag + '" style="cursor:pointer"  onclick="tu(\'tu' + j0 + i0 + '\')" />';
+                }
+            }
+            var ta = $('<div title="请选择图标"> <img src="../images/tabicons.gif" width="396" height="516" border="0" usemap="#Map" /><map name="Map" id="Map">' + icons + '</map></div>');
+            $('#myWindow').window({
+                title: title,
+                width: width === undefined ? 423 : width,
+                height: height === undefined ? 559 : height,
+                content: ta,
+                modal: modal === undefined ? true : modal,
+                minimizable: minimizable === undefined ? false : minimizable,
+                maximizable: maximizable === undefined ? false : maximizable,
+                shadow: false,
+                cache: false,
+                collapsible: false,
+                resizable: false,
+                inline: true,
+                draggable: true,
+                closable: true,
+                loadingMessage: '正在加载数据，请稍等片刻......'
+            });
+
+        }
+</script>
+}

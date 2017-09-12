@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "通用角色权限管理系统";
+}
+<body class="easyui-layout" style="overflow-x:hidden;">
+    <noscript>
+        <div style="position: absolute; z-index: 100000; height: 2046px; top: 0px; left: 0px;
+            width: 100%; background: white; text-align: center;">
+            <img src="/Content/images/noscript.gif" alt='抱歉，请开启脚本支持！' />
+        </div>
+    </noscript>
+    <div region="north" split="true" border="false" style="overflow: hidden; height: 76px;
+        line-height: 20px; color: #fff; font-family: 微软雅黑,黑体">
+        <div class="top">
+            <div id="mainlogo">
+                <img id="banner" src="/Content/images/hzbanner.gif"  alt="通用角色权限管理系统" style="height:72px;"/> 
+            </div>
+            <div id="center">
+            </div>
+            <div id="mainctrl">
+                <div class="wel">
+                    @ViewData["PersonName"]
+                    ,欢迎您的光临！</div>
+                <div class="ctr">
+                    <li>
+                        <img src="/Content/images/yuanjiao.gif" alt="" /></li>
+                    <li><a href="#">
+                        <img src="/Content/images/mimaxiugai.gif" alt="" border="0" /></a></li>
+                    <li class="zi"><a href="#" id="ChangePassword" class="v1">密码修改</a></li>
+                    <li><a href="#">
+                        <img src="/Content/images/anquantuichu.gif" alt="" border="0" /></a></li>
+                    <li class="zi"><a href="#" id="loginOut" class="v1">安全退出</a></li>
+                    <li><a href="#">
+                        <img src="/Content/images/bangzhu.gif" border="0"></a></li>
+                    <li class="zi"><a href="http://www.cnblogs.com/jiekzou/" class="v1" target="_blank">帮助中心</a></li>
+                     <li><a href="#">
+                        <img src="/Content/images/theme.ico" alt="" border="0" /></a></li>
+                    <li class="zi"><a href="#" class="v1" onclick="modifyThemes()">修改主题</a></li>
+@*                   <li><a href="#">
+                        <img src="images/duanxinxi.gif" alt="" border="0" /></a></li>
+                    <li class="zi"><a href="#" class="v1">短消息（0）</a></li>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div region="west" hide="true" split="true" title="导航菜单" style="width: 180px;" id="west">
+        <div class="easyui-accordion" fit="true" border="false">
+            @Html.Raw(ViewData["Menu"])
+        </div>
+    </div>
+    <div id="mainPanle" region="center" style="background: #eee; overflow-x: hidden;">
+        <div id="tabs" class="easyui-tabs" fit="true" border="false">
+        </div>
+    </div>
+    <div region="south" split="true" style="height: 29px;">
+        <div style="padding: 0px; margin-left: 50%;">
+            技术支持：邹琼俊 <a href="http://www.cnblogs.com/jiekzou/" target="_blank">我的博客</a>
+        </div>
+    </div>
+    <div id="mm" class="easyui-menu" style="width: 150px;">
+        <div id="mm-tabupdate" data-options="iconCls:'icon-reload'">
+            刷新</div>
+       <div id="tab_menu-openFrame">
+           在新的窗体打开</div>
+        <div class="menu-sep">
+        </div>
+        <div id="mm-tabclose" data-options="iconCls:'icon-cancel'">
+            关闭</div>
+         <div id="tab_menu-tabcloseright">
+           关闭右边</div>
+        <div id="tab_menu-tabcloseleft">
+           关闭左边</div>
+        <div id="tab_menu-tabcloseall">
+         关闭所有</div>
+        <div id="tab_menu-tabcloseother">
+          关闭其他标签页</div>
+    </div>
+    <div id="w" class="easyui-window" title="修改主题" data-options="closed:true,iconCls:'icon-save',minimizable:false,tools:'#tt'" style="width:500px;height:200px;padding:10px;">
+		           <p>选择主题： <select id="sltThemes"><option value="default">default</option>
+                        <option value="black">black</option>
+                        <option value="bootstrap">bootstrap</option>
+                        <option value="gray">gray</option>
+                        <option value="metro">metro</option>
+                        <option value="metro">material</option>
+</select>
+                       </p> 
+      <p><input type="button"  value="设置" onclick="setThemes()"/></p>
+ </div>
+   <div id="myWindow">
+   </div>
+</body>
+@section scripts { 
+     <script type="text/javascript">
+         function modifyThemes() {
+             var theme = $.cookie('easyuiThemeName');
+             if (theme != null && theme != undefined && theme !== "") {
+                 $("#sltThemes").val(theme);
+             }
+             $('#w').window('open');
+         }
+         function setThemes() {
+             $('#w').window('close');
+             changeThemeFun($("#sltThemes").children('option:selected').val(), window.parent.$('#easyuiTheme'));
+             window.location.reload();
+         }
+         $(function () {
+             //var w = $(document).width();
+             //$("#banner").width(w); //设置bannar的宽度
+             tabCloseEven();
+             addTab("我的博客", "http://www.cnblogs.com/jiekzou/", "zouqiongjun", false);//http://www.cnblogs.com/jiekzou/
+             $('ul li a').click(function () {
+                 var tabTitle = $(this).text();
+                 var url = $(this).attr("rel"); //获取地址
+                 var id = $(this).attr("id"); //获取id
+                 var icon = $(this).attr("icon"); //获取图标
+                 if (icon == "") {
+                     icon = "icon-save";
+                 }
+                 addTab(tabTitle, url, icon, true, id);
+             });
+             $('#loginOut').click(function () {
+                 $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function (r) {
+                     if (r) {
+                         location.href = '/Login/LogOff';
+                     }
+                 });
+             });
+             $('#ChangePassword').click(function () {
+                 showWindow("修改密码", "/Login/ChangePassword", 600, 400);
+             });
+         });
+ </script>
+  }

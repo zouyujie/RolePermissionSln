@@ -1,0 +1,313 @@
+﻿@using My.RolePermission.BLL
+@using My.RolePermission.Common;
+@model My.RolePermission.Model.SMROLETB
+@{
+    ViewBag.Title = "角色管理";
+}
+<div id="content" region="center" fit="true">
+<div id="divQuery" style="padding: 5px; font-size: 12px;" title="查询列表" class="easyui-toolbar">
+    <span>@Html.LabelFor(model => model.ROLE_NAME)</span><input type='text' id='ROLE_NAME' class="easyui-textbox" />
+    <span>@Html.LabelFor(model => model.STATUS)</span> <span>@Html.DropDownListFor(model => model.STATUS, SelectListClass.GetStatus(true),new{@class="easyui-combobox" })</span>
+    <a href="javascript:flexiQuery()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a> 
+    <a href="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'"> 重置</a>
+</div>
+
+<table id="flexigridData">
+</table>
+</div>
+<!------------------------弹出角色浏览信息的弹出层---------------------------------->
+<div id="DivBrowerRole" class="easyui-dialog" style="width: 700px; height:260px;
+    padding: 10px 20px" closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+     <table id="tblBrower" class="usertableborder2" cellspacing="1" cellpadding="3" width="98%"
+            align="center" border="0">
+            <tr class="usertablerow1">
+                <td class="_width">
+                    名称：
+                </td>
+                <td class="width4">
+                    <span id="v_Name"></span>
+                </td>
+                <td class="width0">
+                    创建时间：
+                </td>
+                <td class="time">
+                    <span id="v_CreateTime"></span>
+                </td>
+                <td class="_width">
+                    状态：
+                </td>
+                <td class="width1">
+                    <span id="v_Status"></span>
+                </td>
+            </tr>
+            <tr class="usertablerow2">
+                <td>
+                    创建人：
+                </td>
+                <td>
+                    <span id="v_CreateUser"></span>
+                </td>
+                <td>
+                    编辑时间：
+                </td>
+                <td>
+                    <span id="v_UpdateTime"></span>
+                </td>
+                <td>
+                    编辑人：
+                </td>
+                <td>
+                    <span id="v_UpdateUser"></span>
+                </td>
+            </tr>
+            <tr class="usertablerow1">
+                <td nowrap="noWrap">
+                    描述：
+                </td>
+                <td colspan="5" class="remark">
+                    <div id="v_Remark" style="word-break: break-all">
+                    </div>
+                </td>
+            </tr>
+            <tr class="usertablerow2">
+                <td>
+                    人员：
+                </td>
+                <td colspan="5" class="remark">
+                    <div id="v_UserNames" style="word-break: break-all">
+                    </div>
+                </td>
+            </tr>
+        </table>
+</div>
+<!-------------------------创建和修改层---------------------------------->
+<div id="myWin"></div>
+@section scripts{
+<script type="text/javascript" language="javascript">
+    //回车触发查询
+    $(function () {
+        document.onkeydown = function (e) {
+            var ev = document.all ? window.event : e;
+            if (ev.keyCode == 13) {
+                flexiQuery();
+            }
+        }
+    });
+    $(function () {
+        var flag = window.location.search;
+        var isSingleSelect = true;
+        if (flag == "?view=1") {
+            isSingleSelect = false;
+        }
+        var searchH = $("#divQuery").height();
+        var h = '100%';// document.documentElement.clientHeight - searchH - 26;
+        $('#flexigridData').datagrid({
+            title: '角色', //列表的标题
+            iconCls: 'icon-site',
+            //                fit: true, //列表自动适应宽度
+            width: 'auto',
+            singleSelect: isSingleSelect, //是否单选行
+            selectOnCheck: true, //选中行时复选框选中
+            checkOnSelect: true, //选中复选框时选中行
+            //height: h,
+            nowrap: false, //True 就会把数据显示在一行里。
+            striped: true, //True 就把行条纹化。（即奇偶行使用不同背景色）
+            collapsible: true, //可调节列宽
+            remoteSort: true, //定义是否从服务器给数据排序。
+            url: 'SysRole/GetData', //获取数据的url
+            sortName: 'ROLE_ID', //定义可以排序的列
+            sortOrder: 'desc', //定义列的排序顺序，只能用 'asc' 或 'desc'
+            idField: 'ROLE_ID', //标识字段
+            onDblClickRow: function (rowIndex, rowData) {
+                getDetail(rowData["ROLE_ID"]);
+            } //双击显示详情
+           ,
+            toolbar: [
+                   {
+                       text: '分配权限',
+                       iconCls: 'icon-search',
+                       handler: function () {
+                           flexiSetSysMenu();
+                       }
+                   }],
+            columns: [[
+                    { field: 'ck', checkbox: true },//复选框
+					{ field: 'ROLE_NAME', title: '@Html.LabelFor(model => model.ROLE_NAME)', width: 125, sortable: true }
+					, { field: 'STATUS', title: '@Html.LabelFor(model => model.STATUS)', width: 80, sortable: true }
+                    , { field: 'CREATION_TIME', title: '@Html.LabelFor(model => model.CREATION_TIME)', width: 130, sortable: true
+                    , formatter: function (value, rec) {
+                        if (value) {
+                            return dateTimeConvert(value);
+                        }
+                    }
+                    }
+					, { field: 'REMARK', title: '@Html.LabelFor(model => model.REMARK)', sortable: true }
+
+                ]],
+            pagination: true, //在 datagrid 的底部显示分页栏。
+            rownumbers: true //显示行号的列
+
+        });
+
+        //如果列表页出现在弹出框中，则只显示查询和选择按钮 
+        var parent = window.dialogArguments; //获取父页面
+        //异步获取按钮          
+        if (parent == "undefined" || parent == null) {
+            //首先获取iframe标签的id值
+
+            var iframeid = window.parent.$('#tabs').tabs('getSelected').find('iframe').attr("id");
+
+            //然后关闭AJAX相应的缓存
+            $.ajaxSetup({
+                cache: false
+            });
+
+            //获取按钮值
+            $.getJSON("../Home/GetToolbar", { id: iframeid }, function (data) {
+                if (data == null) {
+                    return;
+                }
+                $('#flexigridData').datagrid("addToolbarItem", data);
+
+            });
+
+        } else {
+            //添加选择按钮
+            $('#flexigridData').datagrid("addToolbarItem", [{ "text": "选择", "iconCls": "icon-ok", handler: function () { flexiSelect(); } }]);
+        }
+
+    });
+
+    //“查询”按钮，弹出查询框
+    function flexiQuery() {
+        //执行查询                        
+        $('#flexigridData').datagrid('reload', { ROLE_NAME: $("#ROLE_NAME").val(), STATUS: $("#STATUS").combobox('getValue') });
+    }
+    function resetData() {
+        $("#ROLE_NAME").textbox('setValue', '')//赋值 
+        $("#STATUS").combobox('setValue','')
+    }
+
+    //“选择”按钮，在其他（与此页面有关联）的页面中，此页面以弹出框的形式出现，选择页面中的数据
+    function flexiSelect() {
+
+        var rows = $('#flexigridData').datagrid('getSelections');
+        if (rows.length == 0) {
+            $.messager.alert('操作提示', '请选择数据!', 'warning');
+            return false;
+        }
+        var arr = [];
+        for (var i = 0; i < rows.length; i++) {
+            arr.push(rows[i].ROLE_ID);
+        }
+        arr.push("^");
+        for (var f = 0; f < rows.length; f++) {
+            arr.push(rows[f].ROLE_NAME);
+        }
+        //主键列和显示列之间用 ^ 分割   每一项用 , 分割
+        if (arr.length > 0) {//一条数据和多于一条
+            returnParent(arr.join("&")); //每一项用 & 分割
+        }
+    }
+    //导航到查看详细的按钮
+    function getView() {
+        //首先取出来用户选择的数据的ID
+        var rows = $("#flexigridData").datagrid("getSelections");
+        //首先取出来值判断用户只能选择一个
+        if (rows.length != 1) {
+            $.messager.alert("友情提示", "每次只能修改/浏览一条，你已经选择了<font color='red'  size='6'>" + rows.length + "</font>条", "error");
+            return;
+        }
+        var id = rows[0].ROLE_ID;
+        getDetail(id);
+    };
+
+    function getDetail(id) {
+        //处理浏览的信息，弹出浏览狂，然后显示浏览信息的相信信息
+        $("#DivBrowerRole").dialog('open').dialog('setTitle', '角色浏览信息');
+        //构造参数发送给后台
+        $.get("/SysRole/Details", { "id": id }, function (roleInfo) {
+            $("#v_Name").text(roleInfo.ROLE_NAME);
+            $("#v_CreateTime").text(dateTimeConvert(roleInfo.CREATION_TIME));
+            $("#v_CreateUser").text(roleInfo.CreateUserName);
+            $("#v_UpdateTime").text(dateTimeConvert(roleInfo.UPDATE_TIME));
+
+            $("#v_UpdateUser").text(roleInfo.UpdateUserName);
+            $("#v_Remark").text(roleInfo.REMARK)
+
+            $("#v_UserNames").text(roleInfo.SysPersonId);
+            $("#v_Status").text(roleInfo.StatusName);
+        });
+    }
+
+    //导航到创建的按钮
+    function flexiCreate() {
+        //window.location.href = "../SysRole/Create";
+        showMyWindow("#myWin", "创建角色", "/SysRole/Create", 680, 316);
+        return false;
+    }
+    //导航到修改的按钮
+    function flexiModify() {
+
+        var arr = $('#flexigridData').datagrid('getSelections');
+
+        if (arr.length == 1) {
+            showMyWindow("#myWin", "修改角色", "/SysRole/Edit/" + arr[0].ROLE_ID, 680, 316);
+        } else {
+            $.messager.alert('操作提示', '请选择一条数据!', 'warning');
+        }
+        return false;
+
+    };
+    //删除的按钮
+    function flexiDelete() {
+
+        var rows = $('#flexigridData').datagrid('getSelections');
+        if (rows.length == 0) {
+            $.messager.alert('操作提示', '请选择数据!', 'warning');
+            return false;
+        }
+
+        var arr = [];
+        for (var i = 0; i < rows.length; i++) {
+            arr.push(rows[i].ROLE_ID);
+        }
+
+        $.messager.confirm('操作提示', "确认删除这 " + arr.length + " 项吗？", function (r) {
+            if (r) {
+                $.post("/SysRole/Delete", { query: arr.join(",") }, function (res) {
+                    if (res == "OK") {
+                        //移除删除的数据
+                        $("#flexigridData").datagrid("reload");
+                        $("#flexigridData").datagrid("clearSelections");
+                        $.messager.alert('操作提示', '删除成功!', 'info');
+                    }
+                    else {
+                        if (res == "") {
+                            $.messager.alert('操作提示', '删除失败!请查看该数据与其他模块下的信息的关联，或联系管理员。', 'info');
+                        }
+                        else {
+                            $.messager.alert('操作提示', res, 'info');
+                        }
+                    }
+                });
+            }
+        });
+
+    };
+    //分配权限
+    flexiSetSysMenu = function () {
+        var arr = $('#flexigridData').datagrid('getSelections');
+
+        if (arr.length == 1) {
+            window.location.href = "/SysRole/SetSysMenu/" + arr[0].ROLE_ID;
+
+        } else {
+            $.messager.alert('操作提示', '请选择一条数据!', 'warning');
+        }
+        return false;
+
+
+    };
+</script>
+    }

@@ -1,0 +1,175 @@
+﻿@model My.RolePermission.Model.SMMENUTB
+@{
+    ViewBag.Title = "Index";
+}
+    <table id="flexigridData">
+</table>
+<div id="DivBrowerMenu" class="easyui-dialog" style="width: 700px; height: 350px;
+    padding: 10px 20px" closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+    <iframe id="iframeMenu"></iframe>
+    </div>
+<!-------------------------创建和修改层---------------------------------->
+<div id="myWin"></div>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            var h = document.documentElement.clientHeight  - 26;
+            $('#flexigridData').treegrid({
+                title: '菜单',
+                iconCls: 'icon-site',
+                //                    url: '../SysMenu/GetAllMetadata',
+                idField: 'ID',
+                treeField: 'NAME',
+                height:h,
+                rownumbers: true,
+                onDblClickRow: function (rowIndex) {
+                    var url = "/SysMenu/Details/" + rowIndex["ID"]; 
+                     showDetailInfo(url);
+            } //双击显示详情
+            ,
+                toolbar: [],
+
+                columns: [[
+                    	{ field: 'NAME', title: '名称', width: 215 }
+
+					, { field: 'URL', title: '@Html.LabelFor(model => model.URL)', width: 215 }
+
+					, { field: 'SORT', title: '@Html.LabelFor(model => model.SORT)', width: 84,sortable: true }
+
+					, { field: 'STATE', title: '@Html.LabelFor(model => model.STATE)', width: 84, sortable: true }
+                //					, { field: 'CREATEPERSON', title: '@Html.LabelFor(model => model.CREATEPERSON)', width: 84 }
+					, { field: 'CREATETIME', title: '@Html.LabelFor(model => model.CREATETIME)', width: 130, sortable: true
+                    , formatter: function (value, rec) {
+                        if (value) {
+                            return dateTimeConvert(value);
+                        }
+                    }
+					}
+				    ]]
+                     ,
+                onBeforeLoad: function (row, param) {
+
+                    if (row) {
+                        $(this).treegrid('options').url = '/SysMenu/GetAllMetadata/' + row.ID;
+                    } else {
+                        $(this).treegrid('options').url = '/SysMenu/GetAllMetadata';
+                    }
+                }
+            });
+
+            //如果列表页出现在弹出框中，则只显示查询和选择按钮 
+            var parent = window.dialogArguments; //获取父页面
+            //异步获取按钮          
+            if (parent == "undefined" || parent == null) {
+                //首先获取iframe标签的id值
+                var iframeid = window.parent.$('#tabs').tabs('getSelected').find('iframe').attr("id");
+
+                //然后关闭AJAX相应的缓存
+                $.ajaxSetup({
+                    cache: false
+                });
+
+                //获取按钮值
+                $.getJSON("/Home/GetToolbar", { id: iframeid }, function (data) {
+                    if (data == null) {
+                        return;
+                    }
+                    $('#flexigridData').datagrid("addToolbarItem", data);
+
+                });
+
+            } else {
+                //添加选择按钮
+                $('#flexigridData').datagrid("addToolbarItem", [{ "text": "选择", "iconCls": "icon-ok", handler: function () { flexiSelect(); } }]);
+            }
+
+        });
+
+        function flexiQuery() {
+            $('#flexigridData').treegrid('reload');
+         }
+        function flexiSelect() {
+            var node = $('#flexigridData').treegrid('getSelected');
+            if (!node) {
+                $.messager.alert('操作提示', '请选择一条数据!', 'warning');
+                return false;
+            }
+            var arr = new Array(0);
+            arr.push(node.ID);
+            arr.push("^"); //主键列和显示列的分割符 ^ 
+            arr.push(node.NAME); 
+            //主键列和显示列之间用 ^ 分割   每一项用 , 分割
+            if (arr.length == 3) {//一条数据和多于一条
+                returnParent(arr.join("&")); //每一项用 & 分割
+            }
+            return false;
+        }
+        //导航到查看详细的按钮
+        function getView() {
+            var arr = $('#flexigridData').treegrid('getSelected');
+            if (arr) {
+                var url = "/SysMenu/Details/" + arr.ID;
+                showDetailInfo(url);
+
+            } else {
+                $.messager.alert('操作提示', '请选择一条数据!', 'warning');
+            }
+            return false;
+        }
+        //显示详情页面
+        function showDetailInfo(url) {
+            showMyWindow("#myWin", "菜单浏览信息", url, 680, 302);
+        }
+
+        //导航到创建的按钮
+        function flexiCreate() {
+            showMyWindow("#myWin", "创建菜单", "/SysMenu/Create", 680, 442);
+            return false;
+        }
+        //导航到修改的按钮
+        function flexiModify() {
+            var arr = $('#flexigridData').treegrid('getSelected');
+            if (arr) {
+                showMyWindow("#myWin", "修改菜单", "/SysMenu/Edit/" + arr.ID, 680, 442);
+
+            } else {
+                $.messager.alert('操作提示', '请选择一条数据!', 'warning');
+            }
+            return false;
+        };
+        //删除的按钮
+        function flexiDelete() {
+            var node = $('#flexigridData').treegrid('getSelected');
+            if (!node) {
+                $.messager.alert('操作提示', '请选择数据!', 'warning');
+
+            } else {
+                $.messager.confirm('操作提示', "确认删除这1项吗？", function (r) {
+                    if (r) {
+                        $.post("/SysMenu/Delete", { query: node.ID }, function (res) {
+                            if (res == "OK") {
+                                remove();
+                                $.messager.alert('操作提示', '删除成功!', 'info');
+                            }
+                            else {
+                                if (res == "") {
+                                    $.messager.alert('操作提示', '删除失败!请查看该数据与其他模块下的信息的关联，或联系管理员。', 'info');
+                                }
+                                else {
+                                    $.messager.alert('操作提示', res, 'info');
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+            return false;
+        };
+        function remove() {
+            var node = $('#flexigridData').treegrid('getSelected');
+            if (node) {
+                $('#flexigridData').treegrid('remove', node.ID);
+            }
+        }
+    </script>
+}

@@ -1,0 +1,12 @@
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\bin\Release\My.RolePermission.Common.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\bin\Release\My.RolePermission.Common.pdb
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\bin\Release\Memcached.ClientLibrary.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\bin\Release\Newtonsoft.Json.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\bin\Release\System.Web.Mvc.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\bin\Release\log4net.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\bin\Release\System.Web.Mvc.xml
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\bin\Release\zh-Hans\System.Web.Mvc.resources.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\obj\Release\My.RolePermission.Common.csprojResolveAssemblyReference.cache
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\obj\Release\My.RolePermission.Common.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Common\obj\Release\My.RolePermission.Common.pdb

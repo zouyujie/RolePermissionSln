@@ -1,0 +1,105 @@
+﻿@model My.RolePermission.Model.SMMENUTB
+@{
+    ViewBag.SubTitle = "菜单 详情";
+    Layout = null;
+    string ids13 = string.Empty;
+    Layout = "~/Views/Shared/Save.cshtml";
+}
+<table id="tbCreate" class="usertableborder2" align="center">
+    <tr class="usertablerow1">
+        <td class="_width">
+            @Html.LabelFor(model => model.NAME)
+        </td>
+        <td>
+            <span>@Html.DisplayFor(model => model.NAME)</span>
+        </td>
+        <td class="_width">
+            @Html.LabelFor(model => model.PARENTID)
+        </td>
+        <td class="width5">
+            <span> @if (Model != null && Model.SMMENUTB2 != null && null != (Model.SMMENUTB2.NAME))
+            {
+                @Model.SMMENUTB2.NAME
+            }</span>
+        </td>
+    </tr>
+    <tr class="usertablerow2">
+        <td>
+            @Html.LabelFor(model => model.URL)
+        </td>
+        <td>
+            <span> @Html.DisplayFor(model => model.URL)</span>
+        </td>
+        <td>
+            @Html.LabelFor(model => model.ICONIC)
+        </td>
+        <td>
+            <span> @Html.DisplayFor(model => model.ICONIC)</span>
+        </td>
+    </tr>
+    <tr class="usertablerow1">
+        <td>
+            @Html.LabelFor(model => model.SORT)
+        </td>
+        <td>
+            <span> @Html.DisplayFor(model => model.SORT)</span>
+        </td>
+        <td>
+            @Html.LabelFor(model => model.STATE)
+        </td>
+        <td>
+             <span>@Html.DisplayFor(model => model.STATE)</span>
+        </td>
+    </tr>
+    <tr class="usertablerow2">
+        <td>
+            @Html.LabelFor(model => model.CREATEPERSON)
+        </td>
+        <td>
+            <span> @Html.DisplayFor(model => model.CREATEPERSON)</span>
+        </td>
+        <td>
+            @Html.LabelFor(model => model.CREATETIME)
+        </td>
+        <td>
+            <span> @Html.DisplayFor(model => model.CREATETIME)</span>
+        </td>
+    </tr>
+    <tr class="usertablerow1">
+        <td>
+            @Html.LabelFor(model => model.UPDATEPERSON)
+        </td>
+        <td>
+            <span> @Html.DisplayFor(model => model.UPDATEPERSON)</span>
+        </td>
+        <td>
+            @Html.LabelFor(model => model.UPDATETIME)
+        </td>
+        <td>
+            <span> @Html.DisplayFor(model => model.UPDATETIME)</span>
+        </td>
+    </tr>
+    <tr class="usertablerow2">
+        <td>
+            @Html.LabelFor(model => model.REMARK)
+        </td>
+        <td colspan="3" style="word-break: break-all; overflow-x: hidden;" class="remark">
+            <span> @Html.ValueFor(model => model.REMARK)</span>
+        </td>
+    </tr>
+    <tr class="usertablerow1">
+        <td>
+            @Html.LabelFor(model => model.SysOperationId)
+        </td>
+        <td colspan="3" class="remark">
+            <span> @foreach (var item13 in Model.SMFUNCTB)
+            {
+                ids13 += item13.FUNC_NAME;
+                ids13 += "，";
+            }</span>
+            <div class="display-field">
+                @ids13.TrimEnd('，')
+            </div>
+        </td>
+    </tr>
+</table>

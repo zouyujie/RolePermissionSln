@@ -1,0 +1,34 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF.Utility.CS.ttinclude"#><#@
+ output extension=".cs"#>
+<#
+CodeGenerationTools code = new CodeGenerationTools(this);
+MetadataLoader loader = new MetadataLoader(this);
+CodeRegion region = new CodeRegion(this, 1);
+MetadataTools ef = new MetadataTools(this);
+string inputFile = @"..\My.RolePermission.Model\RolePermission.edmx";
+EdmItemCollection ItemCollection = loader.CreateEdmItemCollection(inputFile);
+string namespaceName = code.VsNamespaceSuggestion();
+EntityFrameworkTemplateFileManager fileManager = EntityFrameworkTemplateFileManager.Create(this);
+#>
+using My.RolePermission.IDAL;
+using My.RolePermission.Ioc;
+
+namespace My.RolePermission.DAL
+{
+  public partial class DalFactory
+  {
+<#
+    foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
+    {  
+#>
+	 public static I<#=entity.Name#>Repository Get<#=entity.Name#>Repository
+	 {
+	   get
+	    {
+	     return SpringHelper.GetObject<I<#=entity.Name#>Repository>("<#=entity.Name#>Repository");
+	    }
+	 }
+  <#}#>
+ }
+}

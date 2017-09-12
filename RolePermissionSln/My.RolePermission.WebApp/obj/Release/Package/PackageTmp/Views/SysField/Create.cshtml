@@ -1,0 +1,70 @@
+﻿@model My.RolePermission.Model.SMFIELD
+@{
+    ViewBag.SubTitle = "创建 数据字典";
+    Layout = "~/Views/Shared/Save.cshtml";
+}
+@using (Html.BeginForm((string)ViewBag.FormAction, "SysField",FormMethod.Post,new {id = "form1" }))
+{ 
+    <table id="tbCreate" class="usertableborder" align="center">
+        <tr class="usertablerow1">
+            <td class="_width">
+                @Html.LabelFor(model => model.MYTEXTS)：
+            </td>
+            <td>
+                <input type="text" name="MYTEXTS" class="easyui-validatebox" required="true" missingmessage="不能为空"
+                    validtype="length[0,50]" invalidmessage="长度不可超过50" />
+            </td>
+            <td class="_width">
+                <a class="anUnderLine" onclick="showModalOnly('PARENTID','../../SysField');">
+                    @Html.LabelFor(model => model.PARENTID)
+                </a>
+            </td>
+            <td class="width6">
+                <div id="checkPARENTID">
+                </div>
+                @Html.HiddenFor(model => model.PARENTID)
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td class="_width">
+                @Html.LabelFor(model => model.MYTABLES)：
+            </td>
+            <td>
+                <input type="text" name="MYTABLES" class="easyui-validatebox" required="true" missingmessage="不能为空"
+                    validtype="length[0,50]" invalidmessage="长度不可超过50" />
+            </td>
+            <td class="_width">
+                @Html.LabelFor(model => model.MYCOLUMS)：
+            </td>
+            <td class="width2">
+                <input type="text" name="MYCOLUMS" class="easyui-validatebox" required="true" missingmessage="不能为空"
+                    validtype="length[0,50]" invalidmessage="长度不可超过50" />
+            </td>
+        </tr>
+               <tr class="usertablerow1">
+            <td class="_width">
+             @Html.LabelFor(model => model.SORT)：
+            </td>
+            <td colspan="3" class="width2">
+              <input type="text" name="SORT" class="easyui-numberbox" required="true" missingmessage="不能为空"
+                    validtype="length[0,3]" invalidmessage="长度不可超过3" />
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td class="_width">
+                @Html.LabelFor(model => model.REMARK)：
+            </td>
+            <td colspan="3" style="word-break: break-all; overflow-x:hidden;" class="remark">
+                 <textarea style=" width:470px;"  cols="30" name="REMARK" rows="3" class="easyui-validatebox" validType="length[0,200]" invalidMessage="长度不可超过200"></textarea>
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+            <td colspan="4" style="text-align: center; height: 30px;">
+                <a href='#' onclick='$("form").submit()' class="easyui-linkbutton" data-options="iconCls:'icon-add'">
+                    添加</a>
+                                                    <a href='#' onclick="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'"> 重置</a> 
+                <a href='#' onclick="javascript:formClose();" class="easyui-linkbutton" data-options="iconCls:'icon-undo'"> 取消</a>
+            </td>
+        </tr>
+    </table>
+}

@@ -1,0 +1,94 @@
+﻿@model My.RolePermission.Model.SMUSERTB
+@using My.RolePermission.BLL;
+@using My.RolePermission.Common.HtmlHelpers;
+@using My.RolePermission.Common;
+@{
+    ViewBag.SubTitle = "编辑 用户";
+    Layout = "~/Views/Shared/Save.cshtml";
+}
+@using (Html.BeginForm((string)ViewBag.FormAction, "SysUser",FormMethod.Post,new {id = "form1" }))
+{     
+     @Html.HiddenFor(model => model.USER_ID)  
+       <table id="tbCreate" class="usertableborder" align="center">
+        <tr class="usertablerow1">
+            <td class="_width">@Html.LabelFor(model => model.USER_NAME)
+            </td>
+            <td>
+               <input type="text" name="USER_NAME" value='@Html.ValueFor(model => model.USER_NAME)' class="easyui-textbox"  required="true" missingMessage="不能为空" validType="length[0,20]" invalidMessage="长度不可超过20"/>
+            </td>
+            <td class="_width">
+                @Html.LabelFor(model => model.U_ID)
+            </td>
+            <td>
+               <input type="text" name="U_ID" value='@Html.ValueFor(model => model.U_ID)' class="easyui-textbox"  required="true" missingMessage="不能为空" validType="length[0,20]" invalidMessage="长度不可超过20"/>
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td>
+                @Html.LabelFor(model => model.U_PASSWORD)
+            </td>
+            <td>
+               <input type="password" id="U_PASSWORD" value='@Html.ValueFor(model => model.U_PASSWORD)' name="U_PASSWORD" class="easyui-textbox"  required="true" min="3" missingMessage="长度不可小于3"/>
+            </td>
+            <td>@Html.LabelFor(model => model.SurePassword)
+            </td>
+            <td>
+                 <input type="password" name="SurePassword" value='@Html.ValueFor(model => model.U_PASSWORD)' class="easyui-textbox"  required="true" min="3" missingMessage="长度不可小于3" validType="equalTo['#U_PASSWORD']" invalidMessage="两次输入密码不匹配" />
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+            <td>
+                @Html.LabelFor(model => model.GENDER)
+            </td>
+            <td>
+                @Html.RadioButtonListFor(model => model.GENDER, SelectListClass.GetGenders(false), true)
+                @Html.ValidationMessageFor(model => model.GENDER)
+            </td>
+            <td>
+                @Html.LabelFor(model => model.STATUS)
+            </td>
+            <td>
+                @Html.RadioButtonListFor(model => model.STATUS, SelectListClass.GetStatus(false), true)
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td>
+                <a class="anUnderLine" onclick="showModalMany('SysRoleId','/SysRole?view=1');">
+                    @Html.LabelFor(model => model.SysRoleId)
+                </a>
+            </td>
+            <td colspan="3">
+             <div class="selectList">
+                @if (Model != null)
+                {
+                    string ids23 = string.Empty;
+                    <ul id="checkSysRoleId">
+                    @foreach (var item23 in Model.SMROLETB)
+                    {
+                        string item231 = string.Empty;
+                        item231 += item23.ROLE_ID + "&" + item23.ROLE_NAME;
+                        if (ids23.Length > 0)
+                        {
+                            ids23 += "^" + item231;
+                        }
+                        else
+                        {
+                            ids23 += item231;
+                        }
+                        <li id="@item231"><img  alt="删除" title="点击删除" onclick="deleteTable('@item231','SysRoleId');"  src="/Content/Images/deleteimge.png" /> @item23.ROLE_NAME</li>
+                    }
+                    </ul>             
+                <input type="hidden" value="@ids23" name="SysRoleIdOld" id="SysRoleIdOld" />
+                <input type="hidden" value="@ids23" name="SysRoleId" id="SysRoleId" />
+                }
+            </div>
+            </td>
+        </tr>
+           <tr  class="usertablerow1"><td colspan="4" style="text-align:center; height:30px;"> 
+                    <a href='#' onclick='$("form").submit()'  class="easyui-linkbutton" data-options="iconCls:'icon-add'">修改</a> 
+                <a href='#' onclick="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'"> 重置</a> 
+                <a href='#' onclick="javascript:formClose();" class="easyui-linkbutton" data-options="iconCls:'icon-undo'"> 取消</a>
+                    </td></tr>
+    </table>
+}
+    

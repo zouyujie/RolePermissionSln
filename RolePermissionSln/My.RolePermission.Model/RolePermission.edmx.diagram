@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8c86d0336341464589b3b36942830d7d" Name="关系图1">
+        <EntityTypeShape EntityType="RolePermissionModel.SMFIELD" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RolePermissionModel.SMFUNCTB" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RolePermissionModel.SMLOG" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RolePermissionModel.SMMENUROLEFUNCTB" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RolePermissionModel.SMMENUTB" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RolePermissionModel.SMROLETB" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RolePermissionModel.SMUSERTB" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMFIELD_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMFUNCTB" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMLOG_SMUSERTB" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMMENUTB" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMROLETB" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMMENUTB_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMROLETB_SMROLETB" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMROLETB_SMUSERTB" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMROLETB_SMUSERTB1" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMUSERTB_SMUSERTB" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.FK_SMUSERTB_SMUSERTB1" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.SMMENUFUNCTB" ManuallyRouted="false" />
+        <AssociationConnector Association="RolePermissionModel.SMUSERROLETB" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

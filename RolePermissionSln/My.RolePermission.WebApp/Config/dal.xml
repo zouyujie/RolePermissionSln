@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+  <!--这里放容器里面的所有节点-->
+  <description>An  example that demonstrates simple IoC features.</description>
+  <!--name 必须要唯一的，type=类的全名称，所在的程序集-->
+  <object name="SMFIELDRepository" type="My.RolePermission.DAL.SMFIELDRepository, My.RolePermission.DAL" singleton="false"></object>
+  <object name="SMFUNCTBRepository" type="My.RolePermission.DAL.SMFUNCTBRepository, My.RolePermission.DAL" singleton="false"></object>
+  <object name="SMLOGRepository" type="My.RolePermission.DAL.SMLOGRepository, My.RolePermission.DAL" singleton="false"></object>
+  <object name="SMMENUROLEFUNCTBRepository" type="My.RolePermission.DAL.SMMENUROLEFUNCTBRepository, My.RolePermission.DAL" singleton="false"></object>
+  <object name="SMMENUTBRepository" type="My.RolePermission.DAL.SMMENUTBRepository, My.RolePermission.DAL" singleton="false"></object>
+  <object name="SMROLETBRepository" type="My.RolePermission.DAL.SMROLETBRepository, My.RolePermission.DAL" singleton="false"></object>
+  <object name="SMUSERTBRepository" type="My.RolePermission.DAL.SMUSERTBRepository, My.RolePermission.DAL" singleton="false"></object>
+</objects>

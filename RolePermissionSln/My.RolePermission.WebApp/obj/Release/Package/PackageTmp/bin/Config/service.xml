@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+  <object type="My.RolePermission.BLL.SMUSERTBService, My.RolePermission.BLL" singleton="false" name="SMUSERTBService">
+  </object>
+  <object type="My.RolePermission.BLL.SMMENUTBService, My.RolePermission.BLL" singleton="false" name="SMMENUTBService">
+  </object>
+  <object type="My.RolePermission.BLL.SMMENUROLEFUNCTBService, My.RolePermission.BLL" singleton="false" name="SMMENUROLEFUNCTBService">
+  </object>
+  <object type="My.RolePermission.BLL.SMLOGService, My.RolePermission.BLL" singleton="false" name="SMLOGService">
+  </object>
+  <object type="My.RolePermission.BLL.SMROLETBService, My.RolePermission.BLL" singleton="false" name="SMROLETBService">
+  </object>
+  <object type="My.RolePermission.BLL.SMFIELDService, My.RolePermission.BLL" singleton="false" name="SMFIELDService">
+  </object>
+  <object type="My.RolePermission.BLL.SMFUNCTBService, My.RolePermission.BLL" singleton="false" name="SMFUNCTBService">
+  </object>
+</objects>

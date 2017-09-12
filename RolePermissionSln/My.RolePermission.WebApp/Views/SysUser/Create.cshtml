@@ -1,0 +1,90 @@
+﻿@model My.RolePermission.Model.SMUSERTB
+@using My.RolePermission.BLL;
+@using My.RolePermission.Common.HtmlHelpers;
+@using My.RolePermission.Common;
+@{
+    ViewBag.SubTitle = "创建 用户";
+    Layout = "~/Views/Shared/save.cshtml";
+}
+@using (Html.BeginForm(null, null,FormMethod.Post,new {id = "form1" }))
+{ 
+    <table id="tbCreate" class="usertableborder" align="center">
+        <tr class="usertablerow1">
+            <td class="_width">@Html.LabelFor(model => model.USER_NAME)
+            </td>
+            <td>
+                <input type="text" name="USER_NAME" class="easyui-textbox"  required="true" missingMessage="不能为空" validType="length[0,20]" invalidMessage="长度不可超过20"/>
+            </td>
+            <td class="_width">
+                @Html.LabelFor(model => model.U_ID)
+            </td>
+            <td>
+                 <input type="text" name="U_ID" class="easyui-textbox"  required="true" missingMessage="不能为空" validType="length[0,20]" invalidMessage="长度不可超过20"/>
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td>
+                @Html.LabelFor(model => model.U_PASSWORD)
+            </td>
+            <td>
+@*                @Html.PasswordFor(model => model.U_PASSWORD)
+                @Html.ValidationMessageFor(model => model.U_PASSWORD)*@
+                    <input type="password" id="U_PASSWORD" name="U_PASSWORD" class="easyui-textbox"  required="true" min="3" missingMessage="长度不可小于3"/>
+            </td>
+            <td>@Html.LabelFor(model => model.SurePassword)
+            </td>
+            <td>
+               <input type="password" name="SurePassword" class="easyui-textbox"  required="true" min="3" missingMessage="长度不可小于3" validType="equalTo['#U_PASSWORD']" invalidMessage="两次输入密码不匹配" />
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+            <td>
+                @Html.LabelFor(model => model.GENDER)
+            </td>
+            <td>
+                @Html.RadioButtonListFor(model => model.GENDER, SelectListClass.GetGenders(false), true)
+            </td>
+            <td>
+                @Html.LabelFor(model => model.STATUS)
+            </td>
+            <td>
+                @Html.RadioButtonListFor(model => model.STATUS, SelectListClass.GetStatus(false), true)
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td>
+                <a class="anUnderLine" onclick="showModalMany('SysRoleId','../../SysRole?view=1');">
+                    @Html.LabelFor(model => model.SysRoleId)
+                </a>
+            </td>
+            <td colspan="3">
+                <div class="selectList">
+                    <ul id="checkSysRoleId">
+                        @if (Model != null && !string.IsNullOrWhiteSpace(Model.SysRoleId))
+                        {
+                            foreach (var item23 in Model.SysRoleId.Split('^'))
+                            {
+                                string[] it = item23.Split('&');
+                                if (it != null && it.Length == 2 && !string.IsNullOrWhiteSpace(it[0]) && !string.IsNullOrWhiteSpace(it[1]))
+                                {      
+                            <li id="@item23">
+                                <img  alt="删除" title="点击删除" onclick="deleteTable('@item23','SysRoleId');"  src="/Content/Images/deleteimge.png" />
+                                @it[1]</li>                  
+                                }
+                            }
+                        }
+                    </ul>
+                    @Html.HiddenFor(model => model.SysRoleId)
+                </div>
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+            <td colspan="4" style="text-align: center; height: 30px;">
+                <a href='#' onclick='$("#form1").submit()' class="easyui-linkbutton" data-options="iconCls:'icon-add'"> 添加</a> 
+                <a href='#' onclick="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'"> 重置</a> 
+                <a href='#' onclick="javascript:formClose();" class="easyui-linkbutton" data-options="iconCls:'icon-undo'"> 取消</a>
+            </td>
+        </tr>
+    </table>
+        @Html.ValidationSummary(true)
+}

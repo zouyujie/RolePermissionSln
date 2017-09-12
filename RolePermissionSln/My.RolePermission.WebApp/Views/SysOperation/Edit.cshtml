@@ -1,0 +1,92 @@
+﻿@model My.RolePermission.Model.SMFUNCTB
+@using My.RolePermission.BLL;
+@using My.RolePermission.Common;
+@{
+    ViewBag.SubTitle = "操作修改";
+    Layout = "~/Views/Shared/Save.cshtml";
+}
+
+@Html.ValidationSummary(true, "操作修改不成功. 请编辑后重试")
+@using (Html.BeginForm((string)ViewBag.FormAction, "SysOperation",FormMethod.Post,new {id = "form1" }))
+{ 
+                @Html.HiddenFor(model => model.FUNC_ID)   
+      <table id="tbCreate" class="usertableborder" align="center">
+        <tr class="usertablerow1">
+            <td class="width0">
+                @Html.LabelFor(model => model.FUNC_NAME)
+            </td>
+            <td>
+                <input type="text" value='@Html.ValueFor(model => model.FUNC_NAME)' name="FUNC_NAME" class="easyui-textbox" validtype="length[0,64]"
+                    invalidmessage="长度不可超过64" />
+            </td>
+            <td class="width0">
+                @Html.LabelFor(model => model.EVENT_NAME)
+            </td>
+            <td>
+                <input type="text"  value='@Html.ValueFor(model => model.EVENT_NAME)' name="EVENT_NAME" class="easyui-textbox" validtype="length[0,256]"
+                    invalidmessage="长度不可超过256" />
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td>
+                @Html.LabelFor(model => model.ICONIC)
+            </td>
+            <td>
+                <input type="text"  value='@Html.ValueFor(model => model.ICONIC)' name="ICONIC" class="easyui-textbox" validtype="length[0,200]"
+                    invalidmessage="长度不可超过200" />
+            </td>
+            <td>
+                @Html.LabelFor(model => model.ORDERCODE)
+            </td>
+            <td>
+                <input type="text"  value='@Html.ValueFor(model => model.ORDERCODE)' name="ORDERCODE"  class="easyui-numberbox" />
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+            <td>
+                @Html.LabelFor(model => model.CLASS_NAME)
+            </td>
+            <td>
+                <input type="text"  value='@Html.ValueFor(model => model.CLASS_NAME)' name="CLASS_NAME" class="easyui-textbox" validtype="length[0,256]"
+                    invalidmessage="长度不可超过256" />
+            </td>
+                   <td>
+                @Html.LabelFor(model => model.STATUS)
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.STATUS, SelectListClass.GetStatus(true))
+            </td>
+           
+        </tr>
+        <tr class="usertablerow2">
+            <td>@Html.LabelFor(model => model.FUNC_CODE)
+            </td>
+            <td>
+                <input type="text"  value='@Html.ValueFor(model => model.FUNC_CODE)' name="FUNC_CODE" class="easyui-textbox" validtype="length[0,32]"
+                    invalidmessage="长度不可超过32" />
+            </td>
+            <td>@Html.LabelFor(model => model.PARENTFUNC_CODE)
+            </td>
+            <td>
+                <input type="text"  value='@Html.ValueFor(model => model.PARENTFUNC_CODE)' name="PARENTFUNC_CODE" class="easyui-textbox" validtype="length[0,32]"
+                    invalidmessage="长度不可超过32" />
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+      <td>
+                @Html.LabelFor(model => model.SM_SYSTEM)
+            </td>
+            <td colspan="3">
+                <input type="text"  value='@Html.ValueFor(model => model.SM_SYSTEM)' name="SM_SYSTEM" class="easyui-textbox" validtype="length[0,10]"
+                    invalidmessage="长度不可超过10" />
+            </td>
+        </tr>
+         <tr  class="usertablerow2"><td colspan="4" style="text-align:center; height:30px;"> 
+                     <a href='#' onclick='$("form").submit()' class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a> 
+                                                     <a href='#' onclick="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'"> 重置</a> 
+                <a href='#' onclick="javascript:formClose();" class="easyui-linkbutton" data-options="iconCls:'icon-undo'"> 取消</a>
+          </td></tr>
+    </table>
+ 
+}
+

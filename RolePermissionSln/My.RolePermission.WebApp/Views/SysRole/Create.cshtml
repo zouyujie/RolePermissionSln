@@ -1,0 +1,59 @@
+﻿@using My.RolePermission.BLL;
+@using My.RolePermission.Common.HtmlHelpers;
+@using My.RolePermission.Common;
+@model My.RolePermission.Model.SMROLETB
+@{
+    ViewBag.SubTitle = "角色 创建";
+    Layout = "~/Views/Shared/Save.cshtml";
+}
+
+@Html.ValidationSummary(true, "角色创建不成功. 请修改后重试")
+
+@using (Html.BeginForm((string)ViewBag.FormAction, "SysRole",FormMethod.Post,new {id = "form1" }))
+{                  <table id="tbCreate" class="usertableborder" align="center">
+                    <tr class="usertablerow1">
+                        <td class="_width">   @Html.LabelFor(model => model.ROLE_NAME)：</td>
+                        <td>
+                  <input type="text" name="ROLE_NAME" class="easyui-textbox"  required="true" missingMessage="不能为空" validType="length[0,20]" invalidMessage="长度不可超过20"/>
+                        </td>           
+                        <td class="_width">   @Html.LabelFor(model => model.STATUS)：</td>
+                        <td class="width2">
+                              @Html.RadioButtonListFor(model => model.STATUS, SelectListClass.GetStatus(false), true)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>   @Html.LabelFor(model => model.REMARK)：</td>
+                                  <td colspan="2" style="word-break: break-all; overflow-x:hidden;" class="remark">
+              <textarea rows="3" cols="30" name="REMARK" class="easyui-validatebox" validType="length[0,100]" invalidMessage="长度不可超过100">@Html.ValueFor(model => model.REMARK)</textarea>
+            </td>
+            <td></td>
+                    </tr>
+                    <tr class="usertablerow1">
+                        <td>            <a class="anUnderLine" onclick="showModalMany('SysPersonId','/SysUser?view=1');">
+                @Html.LabelFor(model => model.SysPersonId)</a></td>
+                        <td colspan="3">
+                                  <div class="selectList">    
+        <ul  id="checkSysPersonId">
+                @if (Model != null && !string.IsNullOrWhiteSpace(Model.SysPersonId))
+                {
+                    foreach (var item8 in Model.SysPersonId.Split('^'))
+                    {
+                        string[] it = item8.Split('&');
+                        if (it != null && it.Length == 2 && !string.IsNullOrWhiteSpace(it[0]) && !string.IsNullOrWhiteSpace(it[1]))
+                        {                        
+                <li id="@item8"> <img  alt="删除" title="点击删除" onclick="deleteTable('@item8 ','SysPersonId');"  src="/Content/Images/deleteimge.png" /> @it[1]</li>
+                        }
+                    }
+                }
+                </ul>
+               @Html.HiddenFor(model => model.SysPersonId)
+            </div>
+                 </td>
+                    </tr>
+                    <tr  class="usertablerow2"><td colspan="4" style="text-align:center; height:30px;"> 
+                     <a href='#' onclick='$("form").submit()' class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a> 
+                                     <a href='#' onclick="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'"> 重置</a> 
+                <a href='#' onclick="javascript:formClose();" class="easyui-linkbutton" data-options="iconCls:'icon-undo'"> 取消</a>
+                    </td></tr>
+                </table>
+}

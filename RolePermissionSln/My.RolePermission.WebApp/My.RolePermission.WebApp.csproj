@@ -1,0 +1,726 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{02C91D1F-1B9C-44AC-9948-28C226A415E2}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>My.RolePermission.WebApp</RootNamespace>
+    <AssemblyName>My.RolePermission.WebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="ServiceStack.Common, Version=3.9.28.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\redis\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=3.9.28.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\redis\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=3.9.29.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\redis\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.28.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\redis\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\SysFieldController.cs" />
+    <Compile Include="Controllers\SysLogController.cs" />
+    <Compile Include="Controllers\SysMenuController.cs" />
+    <Compile Include="Controllers\SysOperationController.cs" />
+    <Compile Include="Controllers\SysRoleController.cs" />
+    <Compile Include="Controllers\SysUserController.cs" />
+    <Compile Include="Filter\CompressFilterAttribute.cs" />
+    <Compile Include="Filter\LoginFilterAttribute.cs" />
+    <Compile Include="Filter\MyAuthorizeAttribute.cs" />
+    <Compile Include="Filter\MyExceptionAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SysFieldModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\images\theme.ico" />
+    <Content Include="DLL\easyUI\jquery.cookie.js" />
+    <Content Include="DLL\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="DLL\log4net.dll" />
+    <Content Include="DLL\My97DatePicker\calendar.js" />
+    <Content Include="DLL\My97DatePicker\demo.htm" />
+    <Content Include="DLL\My97DatePicker\lang\en.js" />
+    <Content Include="DLL\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="DLL\My97DatePicker\lang\zh-tw.js" />
+    <Content Include="DLL\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="DLL\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="DLL\My97DatePicker\skin\default\img.gif" />
+    <Content Include="DLL\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="DLL\My97DatePicker\skin\whyGreen\bg.jpg" />
+    <Content Include="DLL\My97DatePicker\skin\whyGreen\datepicker.css" />
+    <Content Include="DLL\My97DatePicker\skin\whyGreen\img.gif" />
+    <Content Include="DLL\My97DatePicker\WdatePicker.js" />
+    <Content Include="DLL\My97DatePicker\开发包\lang\en.js" />
+    <Content Include="DLL\My97DatePicker\开发包\lang\zh-cn.js" />
+    <Content Include="DLL\My97DatePicker\开发包\lang\zh-tw.js" />
+    <Content Include="DLL\My97DatePicker\开发包\readme.txt" />
+    <Content Include="DLL\My97DatePicker\开发包\skin\datePicker.gif" />
+    <Content Include="DLL\My97DatePicker\开发包\skin\default\datepicker.css" />
+    <Content Include="DLL\My97DatePicker\开发包\skin\default\img.gif" />
+    <Content Include="DLL\My97DatePicker\开发包\skin\WdatePicker.css" />
+    <Content Include="DLL\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
+    <Content Include="DLL\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
+    <Content Include="DLL\My97DatePicker\开发包\skin\whyGreen\img.gif" />
+    <Content Include="DLL\redis\ServiceStack.Common.dll" />
+    <Content Include="DLL\redis\ServiceStack.Interfaces.dll" />
+    <Content Include="DLL\redis\ServiceStack.Redis.dll" />
+    <Content Include="DLL\redis\ServiceStack.Text.dll" />
+    <Content Include="favicon.ico" />
+    <Content Include="Config\controllers.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\dal.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\service.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\anquantuichu.gif" />
+    <Content Include="Content\images\bangzhu.gif" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\beijing.gif" />
+    <Content Include="Content\images\buttonOn_login.gif" />
+    <Content Include="Content\images\deleteimge.png" />
+    <Content Include="Content\images\direction.gif" />
+    <Content Include="Content\images\hzbanner.gif" />
+    <Content Include="Content\images\login_code.png" />
+    <Content Include="Content\images\login_bg.png" />
+    <Content Include="Content\images\login_bg_0.jpg" />
+    <Content Include="Content\images\login_pas.png" />
+    <Content Include="Content\images\login_user.png" />
+    <Content Include="Content\images\mimaxiugai.gif" />
+    <Content Include="Content\images\noscript.gif" />
+    <Content Include="Content\images\tabicons.gif" />
+    <Content Include="Content\images\tabicons.png" />
+    <Content Include="Content\images\test\head_0.png" />
+    <Content Include="Content\css\signin.css" />
+    <Content Include="Content\images\test\head_120.png" />
+    <Content Include="Content\images\top-back.gif" />
+    <Content Include="Content\images\view.png" />
+    <Content Include="Content\images\yuanjiao.gif" />
+    <Content Include="DLL\Common.Logging.dll" />
+    <Content Include="DLL\easyUI\easyloader.js" />
+    <Content Include="DLL\easyUI\easyuiExt.css" />
+    <Content Include="DLL\easyUI\easyuiExt.js" />
+    <Content Include="DLL\easyUI\jquery.easyui.min.js" />
+    <Content Include="DLL\easyUI\jquery.easyui.mobile.js" />
+    <Content Include="DLL\easyUI\jquery.min.js" />
+    <Content Include="DLL\easyUI\JScriptCommon.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-af.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-am.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-ar.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-bg.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-ca.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-cs.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-cz.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-da.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-de.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-el.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-en.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-es.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-fr.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-it.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-jp.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-ko.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-nl.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-pl.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-pt_BR.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-ru.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-sv_SE.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-tr.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-zh_CN.js" />
+    <Content Include="DLL\easyUI\locale\easyui-lang-zh_TW.js" />
+    <Content Include="DLL\easyUI\themes\black\accordion.css" />
+    <Content Include="DLL\easyUI\themes\black\calendar.css" />
+    <Content Include="DLL\easyUI\themes\black\combo.css" />
+    <Content Include="DLL\easyUI\themes\black\combobox.css" />
+    <Content Include="DLL\easyUI\themes\black\datagrid.css" />
+    <Content Include="DLL\easyUI\themes\black\datalist.css" />
+    <Content Include="DLL\easyUI\themes\black\datebox.css" />
+    <Content Include="DLL\easyUI\themes\black\dialog.css" />
+    <Content Include="DLL\easyUI\themes\black\easyui.css" />
+    <Content Include="DLL\easyUI\themes\black\filebox.css" />
+    <Content Include="DLL\easyUI\themes\black\images\accordion_arrows.png" />
+    <Content Include="DLL\easyUI\themes\black\images\blank.gif" />
+    <Content Include="DLL\easyUI\themes\black\images\calendar_arrows.png" />
+    <Content Include="DLL\easyUI\themes\black\images\combo_arrow.png" />
+    <Content Include="DLL\easyUI\themes\black\images\datagrid_icons.png" />
+    <Content Include="DLL\easyUI\themes\black\images\datebox_arrow.png" />
+    <Content Include="DLL\easyUI\themes\black\images\layout_arrows.png" />
+    <Content Include="DLL\easyUI\themes\black\images\linkbutton_bg.png" />
+    <Content Include="DLL\easyUI\themes\black\images\loading.gif" />
+    <Content Include="DLL\easyUI\themes\black\images\menu_arrows.png" />
+    <Content Include="DLL\easyUI\themes\black\images\messager_icons.png" />
+    <Content Include="DLL\easyUI\themes\black\images\pagination_icons.png" />
+    <Content Include="DLL\easyUI\themes\black\images\panel_tools.png" />
+    <Content Include="DLL\easyUI\themes\black\images\searchbox_button.png" />
+    <Content Include="DLL\easyUI\themes\black\images\slider_handle.png" />
+    <Content Include="DLL\easyUI\themes\black\images\spinner_arrows.png" />
+    <Content Include="DLL\easyUI\themes\black\images\tabs_icons.png" />
+    <Content Include="DLL\easyUI\themes\black\images\tree_icons.png" />
+    <Content Include="DLL\easyUI\themes\black\images\validatebox_warning.png" />
+    <Content Include="DLL\easyUI\themes\black\layout.css" />
+    <Content Include="DLL\easyUI\themes\black\linkbutton.css" />
+    <Content Include="DLL\easyUI\themes\black\menu.css" />
+    <Content Include="DLL\easyUI\themes\black\menubutton.css" />
+    <Content Include="DLL\easyUI\themes\black\messager.css" />
+    <Content Include="DLL\easyUI\themes\black\numberbox.css" />
+    <Content Include="DLL\easyUI\themes\black\pagination.css" />
+    <Content Include="DLL\easyUI\themes\black\panel.css" />
+    <Content Include="DLL\easyUI\themes\black\progressbar.css" />
+    <Content Include="DLL\easyUI\themes\black\propertygrid.css" />
+    <Content Include="DLL\easyUI\themes\black\searchbox.css" />
+    <Content Include="DLL\easyUI\themes\black\slider.css" />
+    <Content Include="DLL\easyUI\themes\black\spinner.css" />
+    <Content Include="DLL\easyUI\themes\black\splitbutton.css" />
+    <Content Include="DLL\easyUI\themes\black\switchbutton.css" />
+    <Content Include="DLL\easyUI\themes\black\tabs.css" />
+    <Content Include="DLL\easyUI\themes\black\textbox.css" />
+    <Content Include="DLL\easyUI\themes\black\tooltip.css" />
+    <Content Include="DLL\easyUI\themes\black\tree.css" />
+    <Content Include="DLL\easyUI\themes\black\validatebox.css" />
+    <Content Include="DLL\easyUI\themes\black\window.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\accordion.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\calendar.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\combo.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\combobox.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\datagrid.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\datalist.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\datebox.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\dialog.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\easyui.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\filebox.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\accordion_arrows.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\blank.gif" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\calendar_arrows.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\combo_arrow.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\datagrid_icons.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\datebox_arrow.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\layout_arrows.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\linkbutton_bg.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\loading.gif" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\menu_arrows.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\messager_icons.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\pagination_icons.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\panel_tools.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\searchbox_button.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\slider_handle.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\spinner_arrows.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\tabs_icons.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\tree_icons.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\images\validatebox_warning.png" />
+    <Content Include="DLL\easyUI\themes\bootstrap\layout.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\linkbutton.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\menu.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\menubutton.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\messager.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\numberbox.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\pagination.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\panel.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\progressbar.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\propertygrid.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\searchbox.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\slider.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\spinner.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\splitbutton.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\switchbutton.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\tabs.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\textbox.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\tooltip.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\tree.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\validatebox.css" />
+    <Content Include="DLL\easyUI\themes\bootstrap\window.css" />
+    <Content Include="DLL\easyUI\themes\color.css" />
+    <Content Include="DLL\easyUI\themes\default\accordion.css" />
+    <Content Include="DLL\easyUI\themes\default\calendar.css" />
+    <Content Include="DLL\easyUI\themes\default\combo.css" />
+    <Content Include="DLL\easyUI\themes\default\combobox.css" />
+    <Content Include="DLL\easyUI\themes\default\datagrid.css" />
+    <Content Include="DLL\easyUI\themes\default\datalist.css" />
+    <Content Include="DLL\easyUI\themes\default\datebox.css" />
+    <Content Include="DLL\easyUI\themes\default\dialog.css" />
+    <Content Include="DLL\easyUI\themes\default\easyui.css" />
+    <Content Include="DLL\easyUI\themes\default\filebox.css" />
+    <Content Include="DLL\easyUI\themes\default\images\accordion_arrows.png" />
+    <Content Include="DLL\easyUI\themes\default\images\blank.gif" />
+    <Content Include="DLL\easyUI\themes\default\images\calendar_arrows.png" />
+    <Content Include="DLL\easyUI\themes\default\images\combo_arrow.png" />
+    <Content Include="DLL\easyUI\themes\default\images\datagrid_icons.png" />
+    <Content Include="DLL\easyUI\themes\default\images\datebox_arrow.png" />
+    <Content Include="DLL\easyUI\themes\default\images\layout_arrows.png" />
+    <Content Include="DLL\easyUI\themes\default\images\linkbutton_bg.png" />
+    <Content Include="DLL\easyUI\themes\default\images\loading.gif" />
+    <Content Include="DLL\easyUI\themes\default\images\menu_arrows.png" />
+    <Content Include="DLL\easyUI\themes\default\images\messager_icons.png" />
+    <Content Include="DLL\easyUI\themes\default\images\pagination_icons.png" />
+    <Content Include="DLL\easyUI\themes\default\images\panel_tools.png" />
+    <Content Include="DLL\easyUI\themes\default\images\searchbox_button.png" />
+    <Content Include="DLL\easyUI\themes\default\images\slider_handle.png" />
+    <Content Include="DLL\easyUI\themes\default\images\spinner_arrows.png" />
+    <Content Include="DLL\easyUI\themes\default\images\tabs_icons.png" />
+    <Content Include="DLL\easyUI\themes\default\images\tree_icons.png" />
+    <Content Include="DLL\easyUI\themes\default\images\validatebox_warning.png" />
+    <Content Include="DLL\easyUI\themes\default\layout.css" />
+    <Content Include="DLL\easyUI\themes\default\linkbutton.css" />
+    <Content Include="DLL\easyUI\themes\default\menu.css" />
+    <Content Include="DLL\easyUI\themes\default\menubutton.css" />
+    <Content Include="DLL\easyUI\themes\default\messager.css" />
+    <Content Include="DLL\easyUI\themes\default\numberbox.css" />
+    <Content Include="DLL\easyUI\themes\default\pagination.css" />
+    <Content Include="DLL\easyUI\themes\default\panel.css" />
+    <Content Include="DLL\easyUI\themes\default\progressbar.css" />
+    <Content Include="DLL\easyUI\themes\default\propertygrid.css" />
+    <Content Include="DLL\easyUI\themes\default\searchbox.css" />
+    <Content Include="DLL\easyUI\themes\default\slider.css" />
+    <Content Include="DLL\easyUI\themes\default\spinner.css" />
+    <Content Include="DLL\easyUI\themes\default\splitbutton.css" />
+    <Content Include="DLL\easyUI\themes\default\switchbutton.css" />
+    <Content Include="DLL\easyUI\themes\default\tabs.css" />
+    <Content Include="DLL\easyUI\themes\default\textbox.css" />
+    <Content Include="DLL\easyUI\themes\default\tooltip.css" />
+    <Content Include="DLL\easyUI\themes\default\tree.css" />
+    <Content Include="DLL\easyUI\themes\default\validatebox.css" />
+    <Content Include="DLL\easyUI\themes\default\window.css" />
+    <Content Include="DLL\easyUI\themes\gray\accordion.css" />
+    <Content Include="DLL\easyUI\themes\gray\calendar.css" />
+    <Content Include="DLL\easyUI\themes\gray\combo.css" />
+    <Content Include="DLL\easyUI\themes\gray\combobox.css" />
+    <Content Include="DLL\easyUI\themes\gray\datagrid.css" />
+    <Content Include="DLL\easyUI\themes\gray\datalist.css" />
+    <Content Include="DLL\easyUI\themes\gray\datebox.css" />
+    <Content Include="DLL\easyUI\themes\gray\dialog.css" />
+    <Content Include="DLL\easyUI\themes\gray\easyui.css" />
+    <Content Include="DLL\easyUI\themes\gray\filebox.css" />
+    <Content Include="DLL\easyUI\themes\gray\images\accordion_arrows.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\blank.gif" />
+    <Content Include="DLL\easyUI\themes\gray\images\calendar_arrows.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\combo_arrow.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\datagrid_icons.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\datebox_arrow.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\layout_arrows.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\linkbutton_bg.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\loading.gif" />
+    <Content Include="DLL\easyUI\themes\gray\images\menu_arrows.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\messager_icons.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\pagination_icons.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\panel_tools.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\searchbox_button.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\slider_handle.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\spinner_arrows.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\tabs_icons.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\tree_icons.png" />
+    <Content Include="DLL\easyUI\themes\gray\images\validatebox_warning.png" />
+    <Content Include="DLL\easyUI\themes\gray\layout.css" />
+    <Content Include="DLL\easyUI\themes\gray\linkbutton.css" />
+    <Content Include="DLL\easyUI\themes\gray\menu.css" />
+    <Content Include="DLL\easyUI\themes\gray\menubutton.css" />
+    <Content Include="DLL\easyUI\themes\gray\messager.css" />
+    <Content Include="DLL\easyUI\themes\gray\numberbox.css" />
+    <Content Include="DLL\easyUI\themes\gray\pagination.css" />
+    <Content Include="DLL\easyUI\themes\gray\panel.css" />
+    <Content Include="DLL\easyUI\themes\gray\progressbar.css" />
+    <Content Include="DLL\easyUI\themes\gray\propertygrid.css" />
+    <Content Include="DLL\easyUI\themes\gray\searchbox.css" />
+    <Content Include="DLL\easyUI\themes\gray\slider.css" />
+    <Content Include="DLL\easyUI\themes\gray\spinner.css" />
+    <Content Include="DLL\easyUI\themes\gray\splitbutton.css" />
+    <Content Include="DLL\easyUI\themes\gray\switchbutton.css" />
+    <Content Include="DLL\easyUI\themes\gray\tabs.css" />
+    <Content Include="DLL\easyUI\themes\gray\textbox.css" />
+    <Content Include="DLL\easyUI\themes\gray\tooltip.css" />
+    <Content Include="DLL\easyUI\themes\gray\tree.css" />
+    <Content Include="DLL\easyUI\themes\gray\validatebox.css" />
+    <Content Include="DLL\easyUI\themes\gray\window.css" />
+    <Content Include="DLL\easyUI\themes\icon.css" />
+    <Content Include="DLL\easyUI\themes\icons\back.png" />
+    <Content Include="DLL\easyUI\themes\icons\blank.gif" />
+    <Content Include="DLL\easyUI\themes\icons\cancel.png" />
+    <Content Include="DLL\easyUI\themes\icons\clear.png" />
+    <Content Include="DLL\easyUI\themes\icons\cut.png" />
+    <Content Include="DLL\easyUI\themes\icons\edit_add.png" />
+    <Content Include="DLL\easyUI\themes\icons\edit_remove.png" />
+    <Content Include="DLL\easyUI\themes\icons\filesave.png" />
+    <Content Include="DLL\easyUI\themes\icons\filter.png" />
+    <Content Include="DLL\easyUI\themes\icons\help.png" />
+    <Content Include="DLL\easyUI\themes\icons\large_chart.png" />
+    <Content Include="DLL\easyUI\themes\icons\large_clipart.png" />
+    <Content Include="DLL\easyUI\themes\icons\large_picture.png" />
+    <Content Include="DLL\easyUI\themes\icons\large_shapes.png" />
+    <Content Include="DLL\easyUI\themes\icons\large_smartart.png" />
+    <Content Include="DLL\easyUI\themes\icons\lock.png" />
+    <Content Include="DLL\easyUI\themes\icons\man.png" />
+    <Content Include="DLL\easyUI\themes\icons\mini_add.png" />
+    <Content Include="DLL\easyUI\themes\icons\mini_edit.png" />
+    <Content Include="DLL\easyUI\themes\icons\mini_refresh.png" />
+    <Content Include="DLL\easyUI\themes\icons\more.png" />
+    <Content Include="DLL\easyUI\themes\icons\no.png" />
+    <Content Include="DLL\easyUI\themes\icons\ok.png" />
+    <Content Include="DLL\easyUI\themes\icons\pencil.png" />
+    <Content Include="DLL\easyUI\themes\icons\print.png" />
+    <Content Include="DLL\easyUI\themes\icons\redo.png" />
+    <Content Include="DLL\easyUI\themes\icons\reload.png" />
+    <Content Include="DLL\easyUI\themes\icons\search.png" />
+    <Content Include="DLL\easyUI\themes\icons\sum.png" />
+    <Content Include="DLL\easyUI\themes\icons\tip.png" />
+    <Content Include="DLL\easyUI\themes\icons\undo.png" />
+    <Content Include="DLL\easyUI\themes\material\accordion.css" />
+    <Content Include="DLL\easyUI\themes\material\calendar.css" />
+    <Content Include="DLL\easyUI\themes\material\combo.css" />
+    <Content Include="DLL\easyUI\themes\material\combobox.css" />
+    <Content Include="DLL\easyUI\themes\material\datagrid.css" />
+    <Content Include="DLL\easyUI\themes\material\datalist.css" />
+    <Content Include="DLL\easyUI\themes\material\datebox.css" />
+    <Content Include="DLL\easyUI\themes\material\dialog.css" />
+    <Content Include="DLL\easyUI\themes\material\easyui.css" />
+    <Content Include="DLL\easyUI\themes\material\filebox.css" />
+    <Content Include="DLL\easyUI\themes\material\images\accordion_arrows.png" />
+    <Content Include="DLL\easyUI\themes\material\images\blank.gif" />
+    <Content Include="DLL\easyUI\themes\material\images\calendar_arrows.png" />
+    <Content Include="DLL\easyUI\themes\material\images\combo_arrow.png" />
+    <Content Include="DLL\easyUI\themes\material\images\datagrid_icons.png" />
+    <Content Include="DLL\easyUI\themes\material\images\datebox_arrow.png" />
+    <Content Include="DLL\easyUI\themes\material\images\layout_arrows.png" />
+    <Content Include="DLL\easyUI\themes\material\images\linkbutton_bg.png" />
+    <Content Include="DLL\easyUI\themes\material\images\loading.gif" />
+    <Content Include="DLL\easyUI\themes\material\images\menu_arrows.png" />
+    <Content Include="DLL\easyUI\themes\material\images\messager_icons.png" />
+    <Content Include="DLL\easyUI\themes\material\images\pagination_icons.png" />
+    <Content Include="DLL\easyUI\themes\material\images\panel_tools.png" />
+    <Content Include="DLL\easyUI\themes\material\images\searchbox_button.png" />
+    <Content Include="DLL\easyUI\themes\material\images\slider_handle.png" />
+    <Content Include="DLL\easyUI\themes\material\images\spinner_arrows.png" />
+    <Content Include="DLL\easyUI\themes\material\images\tabs_icons.png" />
+    <Content Include="DLL\easyUI\themes\material\images\tree_icons.png" />
+    <Content Include="DLL\easyUI\themes\material\images\validatebox_warning.png" />
+    <Content Include="DLL\easyUI\themes\material\layout.css" />
+    <Content Include="DLL\easyUI\themes\material\linkbutton.css" />
+    <Content Include="DLL\easyUI\themes\material\menu.css" />
+    <Content Include="DLL\easyUI\themes\material\menubutton.css" />
+    <Content Include="DLL\easyUI\themes\material\messager.css" />
+    <Content Include="DLL\easyUI\themes\material\numberbox.css" />
+    <Content Include="DLL\easyUI\themes\material\pagination.css" />
+    <Content Include="DLL\easyUI\themes\material\panel.css" />
+    <Content Include="DLL\easyUI\themes\material\progressbar.css" />
+    <Content Include="DLL\easyUI\themes\material\propertygrid.css" />
+    <Content Include="DLL\easyUI\themes\material\searchbox.css" />
+    <Content Include="DLL\easyUI\themes\material\slider.css" />
+    <Content Include="DLL\easyUI\themes\material\spinner.css" />
+    <Content Include="DLL\easyUI\themes\material\splitbutton.css" />
+    <Content Include="DLL\easyUI\themes\material\switchbutton.css" />
+    <Content Include="DLL\easyUI\themes\material\tabs.css" />
+    <Content Include="DLL\easyUI\themes\material\textbox.css" />
+    <Content Include="DLL\easyUI\themes\material\tooltip.css" />
+    <Content Include="DLL\easyUI\themes\material\tree.css" />
+    <Content Include="DLL\easyUI\themes\material\validatebox.css" />
+    <Content Include="DLL\easyUI\themes\material\window.css" />
+    <Content Include="DLL\easyUI\themes\metro\accordion.css" />
+    <Content Include="DLL\easyUI\themes\metro\calendar.css" />
+    <Content Include="DLL\easyUI\themes\metro\combo.css" />
+    <Content Include="DLL\easyUI\themes\metro\combobox.css" />
+    <Content Include="DLL\easyUI\themes\metro\datagrid.css" />
+    <Content Include="DLL\easyUI\themes\metro\datalist.css" />
+    <Content Include="DLL\easyUI\themes\metro\datebox.css" />
+    <Content Include="DLL\easyUI\themes\metro\dialog.css" />
+    <Content Include="DLL\easyUI\themes\metro\easyui.css" />
+    <Content Include="DLL\easyUI\themes\metro\filebox.css" />
+    <Content Include="DLL\easyUI\themes\metro\images\accordion_arrows.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\blank.gif" />
+    <Content Include="DLL\easyUI\themes\metro\images\calendar_arrows.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\combo_arrow.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\datagrid_icons.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\datebox_arrow.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\layout_arrows.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\linkbutton_bg.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\loading.gif" />
+    <Content Include="DLL\easyUI\themes\metro\images\menu_arrows.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\messager_icons.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\pagination_icons.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\panel_tools.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\searchbox_button.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\slider_handle.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\spinner_arrows.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\tabs_icons.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\tree_icons.png" />
+    <Content Include="DLL\easyUI\themes\metro\images\validatebox_warning.png" />
+    <Content Include="DLL\easyUI\themes\metro\layout.css" />
+    <Content Include="DLL\easyUI\themes\metro\linkbutton.css" />
+    <Content Include="DLL\easyUI\themes\metro\menu.css" />
+    <Content Include="DLL\easyUI\themes\metro\menubutton.css" />
+    <Content Include="DLL\easyUI\themes\metro\messager.css" />
+    <Content Include="DLL\easyUI\themes\metro\numberbox.css" />
+    <Content Include="DLL\easyUI\themes\metro\pagination.css" />
+    <Content Include="DLL\easyUI\themes\metro\panel.css" />
+    <Content Include="DLL\easyUI\themes\metro\progressbar.css" />
+    <Content Include="DLL\easyUI\themes\metro\propertygrid.css" />
+    <Content Include="DLL\easyUI\themes\metro\searchbox.css" />
+    <Content Include="DLL\easyUI\themes\metro\slider.css" />
+    <Content Include="DLL\easyUI\themes\metro\spinner.css" />
+    <Content Include="DLL\easyUI\themes\metro\splitbutton.css" />
+    <Content Include="DLL\easyUI\themes\metro\switchbutton.css" />
+    <Content Include="DLL\easyUI\themes\metro\tabs.css" />
+    <Content Include="DLL\easyUI\themes\metro\textbox.css" />
+    <Content Include="DLL\easyUI\themes\metro\tooltip.css" />
+    <Content Include="DLL\easyUI\themes\metro\tree.css" />
+    <Content Include="DLL\easyUI\themes\metro\validatebox.css" />
+    <Content Include="DLL\easyUI\themes\metro\window.css" />
+    <Content Include="DLL\easyUI\themes\mobile.css" />
+    <Content Include="DLL\Memcached.ClientLibrary.dll" />
+    <Content Include="DLL\Newtonsoft.Json.dll" />
+    <Content Include="DLL\Spring.Core.dll" />
+    <Content Include="Global.asax" />
+    <Content Include="DLL\easyUI\themes\material\images\Thumbs.db" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Properties\PublishProfiles\RoPermission.pubxml" />
+    <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Login\ChangePassword.cshtml" />
+    <Content Include="Views\SysUser\Index.cshtml" />
+    <Content Include="Views\SysUser\Create.cshtml" />
+    <Content Include="Views\Shared\save.cshtml" />
+    <Content Include="Views\SysRole\Index.cshtml" />
+    <Content Include="Views\SysUser\Edit.cshtml" />
+    <Content Include="Views\SysLog\Index.cshtml" />
+    <Content Include="Views\SysField\Index.cshtml" />
+    <Content Include="Views\SysField\Create.cshtml" />
+    <Content Include="Views\SysField\Edit.cshtml" />
+    <Content Include="Views\SysRole\Create.cshtml" />
+    <Content Include="Views\SysRole\Edit.cshtml" />
+    <Content Include="Views\SysOperation\Index.cshtml" />
+    <Content Include="Views\SysOperation\Edit.cshtml" />
+    <Content Include="Views\SysOperation\Create.cshtml" />
+    <Content Include="Views\SysMenu\Index.cshtml" />
+    <Content Include="Views\SysMenu\Create.cshtml" />
+    <Content Include="Views\SysMenu\Edit.cshtml" />
+    <Content Include="Views\SysRole\SetSysMenu.cshtml" />
+    <Content Include="Views\SysMenu\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\My.RolePermission.BLL\My.RolePermission.BLL.csproj">
+      <Project>{a21fddb5-0980-4223-8cf3-2900e7d0271b}</Project>
+      <Name>My.RolePermission.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\My.RolePermission.Common\My.RolePermission.Common.csproj">
+      <Project>{9a85bb22-2255-44ae-9df4-f7dcf7699dd6}</Project>
+      <Name>My.RolePermission.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\My.RolePermission.IBLL\My.RolePermission.IBLL.csproj">
+      <Project>{24732ed6-18a8-4045-b194-1e42588ae007}</Project>
+      <Name>My.RolePermission.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\My.RolePermission.Ioc\My.RolePermission.Ioc.csproj">
+      <Project>{edb983c1-1eae-45d6-90ca-31f291a38eab}</Project>
+      <Name>My.RolePermission.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\My.RolePermission.Model\My.RolePermission.Model.csproj">
+      <Project>{04e332d7-42bf-441d-8495-9676e975dfb4}</Project>
+      <Name>My.RolePermission.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>62727</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:42044/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:42044/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

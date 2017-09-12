@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+@*         @Styles.Render("~/Content/easyUI/css")*@
+    @Styles.Render("~/DLL/easyUI/themes/icon.css")
+     @Styles.Render("~/DLL/easyUI/easyuiExt.css")
+     <link id="easyuiTheme" href="~/DLL/easyUI/themes/bootstrap/easyui.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderBody()
+    @*  @Scripts.Render("~/bundles/easyui")*@
+    @Scripts.Render("~/bundles/jscookie")
+    @Scripts.Render("~/DLL/easyUI/jquery.easyui.min.js")
+    @Scripts.Render("~/bundles/easyui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+<script type='text/javascript'>
+    var win = "#myWin";
+    function ajaxFrom(form, url) {
+        $.ajax({
+            url: url,
+            type: "Post",
+            data: $(form).serialize(),
+            dataType: "json",
+            success: function (data) {
+                if ($.messager) {
+                    $.messager.defaults.ok = '继续';
+                    $.messager.defaults.cancel = '取消';
+
+                    $.messager.confirm('操作提示', data, function (r) {
+                        if (!r) {
+                            parent.$(win).window('close');
+                            parent.flexiQuery();
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+    $(function () {
+        $("form").submit(function (form) {
+            var v = $("form").form('validate');
+            if (v) {
+                ajaxFrom(this, this.action);
+            }
+            return false;
+        });
+    });
+    $.extend($.fn.validatebox.defaults.rules, {
+        /*必须和某个字段相等*/
+        equalTo: {
+            validator: function (value, param) {
+                return $(param[0]).val() == value;
+            },
+            message: '字段不匹配'
+        }
+
+    });
+    function formClose() {
+        parent.$('#myWin').window('close');
+        //parent.flexiQuery();
+    }
+    function resetData() {
+        document.getElementById("form1").reset();
+    }
+    function changeThemeFun(themeName, $easyuiTheme) {/* 更换主题 */
+        $.cookie('easyuiThemeName', themeName, { expires: 7 });
+        var url = $easyuiTheme.attr('href');
+        var href = "DLL/easyUI/themes/" + themeName + '/easyui.css';
+        $easyuiTheme.attr('href', href);
+        var $iframe = $('iframe');
+        if ($iframe.length > 0) {
+            for (var i = 0; i < $iframe.length; i++) {
+                var ifr = $iframe[i];
+                $(ifr).contents().find('#easyuiTheme').attr('href', href);
+            }
+        }
+    };
+    function initThemes() {
+        var $easyuiTheme = $('#easyuiTheme');
+        if ($.cookie('easyuiThemeName')) {
+            changeThemeFun($.cookie('easyuiThemeName'), $easyuiTheme);
+        }
+        else {
+            $easyuiTheme.attr('href', "DLL/easyUI/themes/bootstrap/easyui.css");
+        }
+    }
+    //initThemes();
+</script>
+</html>

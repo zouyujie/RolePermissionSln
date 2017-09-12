@@ -1,0 +1,7 @@
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Ioc\bin\Release\My.RolePermission.Ioc.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Ioc\bin\Release\My.RolePermission.Ioc.pdb
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Ioc\bin\Release\Spring.Core.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Ioc\bin\Release\Common.Logging.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Ioc\obj\Release\My.RolePermission.Ioc.csprojResolveAssemblyReference.cache
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Ioc\obj\Release\My.RolePermission.Ioc.dll
+D:\Study\Chapter12\RolePermissionSln\My.RolePermission.Ioc\obj\Release\My.RolePermission.Ioc.pdb

@@ -1,0 +1,183 @@
+﻿@model My.RolePermission.Model.SMMENUTB
+@using My.RolePermission.BLL;
+@using My.RolePermission.Common.HtmlHelpers;
+@using My.RolePermission.Common;
+@{
+    ViewBag.SubTitle = "菜单 修改";
+    Layout = "~/Views/Shared/Save.cshtml";
+}
+@Html.ValidationSummary(true, "菜单修改不成功. 请编辑后重试")
+@using (Html.BeginForm((string)ViewBag.FormAction, "SysMenu",FormMethod.Post,new {id = "form1" }))
+{            
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.MENULEVEL)
+            @Html.HiddenFor(model => model.CREATEPERSON)
+            @Html.HiddenFor(model => model.CREATETIME)
+      <table id="tbCreate" class="usertableborder" align="center">
+        <tr class="usertablerow1">
+            <td class="_width">
+                @Html.LabelFor(model => model.NAME)
+            </td>
+            <td>
+                <input type="text" value='@Html.ValueFor(model => model.NAME)' name="NAME" class="easyui-textbox" required="true" missingmessage="不能为空"
+                    validtype="length[0,200]" invalidmessage="长度不可超过200" />
+            </td>
+            <td class="_width">
+                <a class="anUnderLine" onclick="showModalOnly('PARENTID','/SysMenu');">
+                    @Html.LabelFor(model => model.PARENTID)
+                </a>
+            </td>
+            <td class="width5">
+                     <div id="checkPARENTID">
+                    @if (Model != null)
+                    {
+                        if (Model.PARENTID != null)
+                        {
+                    <table id="@Model.PARENTID" class="deleteStyle">
+                        <tr>
+                            <td>
+                                <img alt="删除" title="点击删除" src="/Content/Images/deleteimge.png" onclick="deleteTable('@Model.PARENTID','PARENTID');" />
+                            </td>
+                            <td>
+                                @Model.SMMENUTB2.NAME
+                            </td>
+                        </tr>
+                    </table>
+                        }
+                    }
+                </div>
+                @Html.HiddenFor(model => model.PARENTID)
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td>
+                @Html.LabelFor(model => model.URL)
+            </td>
+            <td>
+                <input type="text"  value='@Html.ValueFor(model => model.URL)' name="URL" class="easyui-textbox" validtype="length[0,200]"
+                    invalidmessage="长度不可超过200" />
+            </td>
+            <td>
+                <a class="anUnderLine" onclick="showMyWindow('选择图标', '/Home/Iconic');">
+                    @Html.LabelFor(model => model.ICONIC)
+                </a>
+            </td>
+            <td>
+                 @if (Model != null)
+                 {
+                <div id="Icon" class="easyui-panel" data-options="title: '您选择的图标'
+                , width:180,iconCls:'  @Model.ICONIC'">
+                </div>
+                 }
+                @Html.HiddenFor(model => model.ICONIC)
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+            <td>
+                @Html.LabelFor(model => model.SORT)
+            </td>
+            <td>
+                <input type="text" value='@Html.ValueFor(model => model.SORT)' name="SORT" class="easyui-textbox" max="2147483646" invalidmessage="数值超出范围" />
+            </td>
+            <td>
+                @Html.LabelFor(model => model.STATE)
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.STATE, SelectListClass.GetStatus(true))
+            </td>
+        </tr>
+              <tr  class="usertablerow2" style="height:30px;"><td> @Html.LabelFor(model => model.ISLEAF)</td><td colspan="3">
+                 @Html.RadioButtonListFor(model => model.ISLEAF, SelectListClass.GetYesOrNo(false), true)</td></tr>
+        <tr  class="usertablerow1">
+            <td>
+                @Html.LabelFor(model => model.REMARK)
+            </td>
+            <td colspan="2" style="word-break: break-all; overflow-x: hidden;" class="remark">
+                <textarea cols="30" name="REMARK" rows="3" class="easyui-validatebox" validtype="length[0,200]"
+                    invalidmessage="长度不可超过200">@Html.ValueFor(model => model.REMARK)</textarea>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr class="usertablerow2">
+            <td>
+                <a class="anUnderLine" onclick="showModalMany('SysOperationId','/SysOperation?view=1');">
+                @Html.LabelFor(model => model.SysOperationId)</a>
+            </td>
+            <td colspan="3">
+                   <div class="selectList">              
+                       @if (Model != null)
+                       {
+                           string ids13 = string.Empty;
+                            <ul id="checkSysOperationId">
+                           @foreach (var item13 in Model.SMFUNCTB)
+                           {
+                               string item131 = string.Empty;
+                               item131 += item13.FUNC_ID + "&" + item13.FUNC_NAME;
+                               if (ids13.Length > 0)
+                               {
+                                   ids13 += "^" + item131;
+                               }
+                               else
+                               {
+                                   ids13 += item131;
+                               }
+                   <li id="@item131"> <img alt="删除" title="点击删除" onclick="deleteTable('@item131','SysOperationId');"
+                                    src="/Content/Images/deleteimge.png" />  @item13.FUNC_NAME</li>
+                           }
+                            </ul>
+                    <input type="hidden" value="@ids13" name="SysOperationIdOld" id="SysOperationIdOld" />
+                    <input type="hidden" value="@ids13" name="SysOperationId" id="SysOperationId" />
+                       }
+
+                </div>
+            </td>
+        </tr>
+        <tr class="usertablerow1">
+            <td colspan="4" style="text-align: center; height: 30px;">
+                 <a href='#' onclick='$("form").submit()' class="easyui-linkbutton" data-options="iconCls:'icon-edit'">
+                    修改</a>
+                                                    <a href='#' onclick="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'"> 重置</a> 
+                <a href='#' onclick="javascript:formClose();" class="easyui-linkbutton" data-options="iconCls:'icon-undo'"> 取消</a>
+            </td>
+        </tr>
+    </table>   
+}
+    <div id="myWindow">
+    </div>
+@section scripts{
+    <script type="text/javascript">
+        function tu(tuclass) {
+            $('#Icon').panel({
+                iconCls: tuclass
+            });
+            $('#ICONIC').val(tuclass);
+            $('#myWindow').window('close');
+        }
+        function showMyWindow(title, href, width, height, modal, minimizable, maximizable) {
+            var icons = "";
+            var flag = 19.6;
+            for (var i = 1; i <= 26; i++) {
+                var i0 = i < 10 ? "0" + i : i;
+                for (var j = 1; j <= 20; j++) {
+                    var j0 = j < 10 ? "0" + j : j;
+                    icons += '<area shape="rect" coords="' + (j - 1) * flag + ',' + (i - 1) * flag + ',' + j * flag + ',' + i * flag + '" style="cursor:pointer"  onclick="tu(\'tu' + j0 + i0 + '\')" />';
+                }
+            }
+            var ta = $('<div title="请选择图标" style="scroll:auto"> <img src="/Content/images/tabicons.gif" width="396" height="516" border="0" usemap="#Map" /><map name="Map" id="Map">' + icons + '</map></div>');
+            $('#myWindow').window({
+                title: title,
+                width: width === undefined ? 423 : width,
+                height: height === undefined ? 559 : height,
+                content: ta,
+                modal: modal === undefined ? true : modal,
+                minimizable: minimizable === undefined ? false : minimizable,
+                maximizable: maximizable === undefined ? false : maximizable,
+                shadow: false,
+                cache: false,
+                collapsible: false,
+                loadingMessage: '正在加载数据，请稍等片刻......'
+            });
+        }
+    </script>
+  }

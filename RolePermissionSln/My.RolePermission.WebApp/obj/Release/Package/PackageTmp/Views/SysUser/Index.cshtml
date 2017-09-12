@@ -1,0 +1,303 @@
+﻿@model My.RolePermission.Model.SMUSERTB
+@{
+    ViewBag.Title = "人员";
+}
+@using My.RolePermission.BLL; 
+@using My.RolePermission.Common;
+    <div id="content" region="center" fit="true">
+    <!-------------------------------搜索框----------------------------------->
+    <div id="divQuery" style=" padding-bottom: 5px; font-size: 12px;" title="查询列表">
+        <span>@Html.LabelFor(model => model.USER_NAME)：</span><input type='text' id='USER_NAME' class="easyui-textbox"/>
+        <span>@Html.LabelFor(model => model.GENDER)：</span> <span>@Html.DropDownListFor(model => model.GENDER, SelectListClass.GetGenders(true),new{@class="easyui-combobox" })</span>
+        <span>@Html.LabelFor(model => model.STATUS)：</span> <span>@Html.DropDownListFor(model => model.STATUS, SelectListClass.GetStatus(true),new{@class="easyui-combobox" })</span>
+        <a href="javascript:flexiQuery()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">
+            查询</a> <a href="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'">
+                重置</a>
+    </div>
+    <table id="flexigridData">
+    </table>
+    </div>
+    <!------------------------弹出用户浏览信息的弹出层---------------------------------->
+<div id="DivBrowerUser" class="easyui-dialog" style="width: 700px; height: 220px;
+    padding: 10px 20px" closed="true" resizable="true" modal="true" buttons="#dlg-buttons"> 
+            <table id="tblBrower" class="usertableborder2" cellspacing="1" cellpadding="3" width="98%"
+                align="center" border="0">
+                <tr class="usertablerow2">
+                    <td class="_width">
+                        姓名：
+                    </td>
+                    <td>
+                        <span id="v_Name"></span>
+                    </td>
+                    <td class="width0">
+                        用户登录名：
+                    </td>
+                    <td class="time">
+                        <span id="v_Uid"></span>
+                    </td>
+                    <td class="_width">
+                        性别：
+                    </td>
+                    <td class="width2">
+                        <span id="v_Gender"></span>
+                    </td>
+                </tr>
+                <tr class="usertablerow1">
+                    <td>
+                        修改时间：
+                    </td>
+                    <td>
+                        <span id="v_UpdateTime"></span>
+                    </td>
+                    <td>
+                        启用状态：
+                    </td>
+                    <td>
+                        <span id="v_Status"></span>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="usertablerow2">
+                    <td>
+                        创建人：
+                    </td>
+                    <td>
+                        <span id="v_CreateUser"></span>
+                    </td>
+                    <td>
+                        创建时间：
+                    </td>
+                    <td>
+                        <span id="v_CreateTime"></span>
+                    </td>
+                    <td>
+                        更改人：
+                    </td>
+                    <td>
+                        <span id="v_UpdateUser"></span>
+                    </td>
+                </tr>
+                <tr class="usertablerow2">
+                    <td>
+                        角色：
+                    </td>
+                    <td colspan="5" class="remark">
+                        <div id="v_Roles" style="word-break: break-all">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+    </div>
+    <!-------------------------创建和修改层---------------------------------->
+    <div id="myWin">
+    </div>
+@section scripts{
+    <script type="text/javascript" language="javascript">
+        //回车触发查询
+        $(function () {
+            document.onkeydown = function (e) {
+                var ev = document.all ? window.event : e;
+                if (ev.keyCode == 13) {
+                    flexiQuery();
+                }
+            }
+        });
+        $(function () {
+            var flag = window.location.search;
+            var isSingleSelect = true;
+            if (flag == "?view=1") {
+                isSingleSelect = false;
+            }
+            var searchH = $("#divQuery").height();
+            var h = document.documentElement.clientHeight - searchH - 26;
+            $('#flexigridData').datagrid({
+                title: '人员', //列表的标题
+                iconCls: 'icon-site',
+                //                fit: true, //列表自动适应宽度
+                width: 'auto',
+                //height: h,
+                singleSelect: isSingleSelect,
+                selectOnCheck: true, //选中行时复选框选中
+                checkOnSelect: true, //选中复选框时选中行
+                nowrap: false, //True 就会把数据显示在一行里。
+                striped: true, //True 就把行条纹化。（即奇偶行使用不同背景色）
+                collapsible: true, //可调节列宽
+                remoteSort: true, //定义是否从服务器给数据排序。
+                url: 'SysUser/GetData', //获取数据的url
+                sortName: 'USER_ID', //定义可以排序的列
+                sortOrder: 'desc', //定义列的排序顺序，只能用 'asc' 或 'desc'
+                idField: 'USER_ID', //标识字段
+                onDblClickRow: function (rowIndex, rowData) {
+                    getDetail(rowData["USER_ID"]);
+                } //双击显示详情
+             ,
+                toolbar: [],
+                columns: [[
+                    { field: 'ck', checkbox: true }, //复选框
+					{field: 'U_ID', title: '@Html.LabelFor(model => model.U_ID)', width: 80, sortable: true }
+					, { field: 'USER_NAME', title: '@Html.LabelFor(model => model.USER_NAME)', width: 80, sortable: true }
+					, { field: 'GenderName', title: '@Html.LabelFor(model => model.GenderName)', width: 80, sortable: true }
+					, { field: 'CreateUserName', title: '@Html.LabelFor(model => model.CreateUserName)', width: 80, sortable: true }
+					, { field: 'StatusName', title: '@Html.LabelFor(model => model.StatusName)', width: 80, sortable: true }
+					, { field: 'CREATION_TIME', title: '@Html.LabelFor(model => model.CREATION_TIME)', width: 130, sortable: true
+                    , formatter: function (value, rec) {
+                        if (value) {
+                            return dateTimeConvert(value);
+                        }
+                    }
+					}
+
+                ]],
+                pagination: true, //在 datagrid 的底部显示分页栏。
+                rownumbers: true //显示行号的列
+            });
+
+            //如果列表页出现在弹出框中，则只显示查询和选择按钮 
+            var parent = window.dialogArguments; //获取父页面
+            //异步获取按钮          
+            if (parent == "undefined" || parent == null) {
+                //首先获取iframe标签的id值
+                var iframeid = window.parent.$('#tabs').tabs('getSelected').find('iframe').attr("id");
+                //然后关闭AJAX相应的缓存
+                $.ajaxSetup({
+                    cache: false
+                });
+
+                //获取按钮值
+                $.getJSON("/Home/GetToolbar", { id: iframeid }, function (data) {
+                    if (data == null) {
+                        return;
+                    }
+                    $('#flexigridData').datagrid("addToolbarItem", data);
+
+                });
+
+            } else {
+                //添加选择按钮
+                $('#flexigridData').datagrid("addToolbarItem", [{ "text": "选择", "iconCls": "icon-ok", handler: function () { flexiSelect(); } }]);
+            }
+        });
+
+        //“查询”按钮，弹出查询框
+        function flexiQuery() {
+            //执行查询                        
+            $('#flexigridData').datagrid('reload', { UserName: $("#USER_NAME").textbox('getValue'), GenderName: $("#GENDER").combobox('getValue'), StatusName: $("#STATUS").combobox('getValue') });
+        }
+        function resetData() {
+            $("#USER_NAME").textbox('setValue', '')//赋值 
+            $("#GENDER").combobox('setValue', '')
+            $("#STATUS").combobox('setValue', '')
+        }
+
+        //“选择”按钮，在其他（与此页面有关联）的页面中，此页面以弹出框的形式出现，选择页面中的数据
+        function flexiSelect() {
+
+            var rows = $('#flexigridData').datagrid('getSelections');
+            if (rows.length == 0) {
+                $.messager.alert('操作提示', '请选择数据!', 'warning');
+                return false;
+            }
+
+            var arr = [];
+            for (var i = 0; i < rows.length; i++) {
+                arr.push(rows[i].USER_ID);
+            }
+            arr.push("^");
+            for (var f = 0; f < rows.length; f++) {
+                arr.push(rows[f].USER_NAME);
+            }
+            //主键列和显示列之间用 ^ 分割   每一项用 , 分割
+            if (arr.length > 0) {//一条数据和多于一条
+                returnParent(arr.join("&")); //每一项用 & 分割
+            }
+        }
+        //导航到查看详细的按钮
+        function getView() {
+            //首先取出来用户选择的数据的ID
+            var rows = $("#flexigridData").datagrid("getSelections");
+            //首先取出来值判断用户只能选择一个
+            if (rows.length != 1) {
+                $.messager.alert("友情提示", "每次只能修改/浏览一条，你已经选择了<font color='red'  size='6'>" + rows.length + "</font>条", "error");
+                return;
+            }
+            var id = rows[0].USER_ID;
+            getDetail(id);
+        };
+
+        function getDetail(id) {
+            //处理浏览的信息，弹出浏览狂，然后显示浏览信息的相信信息
+            $("#DivBrowerUser").dialog('open').dialog('setTitle', '浏览用户信息');
+            //构造参数发送给后台
+            $.get("/SysUser/Details", { "id": id }, function (userInfo) {
+                $("#v_Name").text(userInfo.USER_NAME);
+                $("#v_Uid").text(userInfo.U_ID);
+                $("#v_Gender").text(userInfo.GenderName);
+                $("#v_Status").text(userInfo.StatusName);
+
+                $("#v_CreateUser").text(userInfo.CreateUserName);
+                $("#v_UpdateUser").text(userInfo.UpdateUserName);
+                $("#v_CreateTime").text(dateTimeConvert(userInfo.CREATION_TIME));
+                $("#v_UpdateTime").text(dateTimeConvert(userInfo.UPDATE_TIME));
+
+                $("#v_Roles").text(userInfo.SysRoleId);
+
+            });
+        }
+
+        //导航到创建的按钮
+        function flexiCreate() {
+            showMyWindow("#myWin", "创建用户", "/SysUser/Create", 726, 306);
+            return false;
+        }
+        //导航到修改的按钮
+        function flexiModify() {
+
+            var arr = $('#flexigridData').datagrid('getSelections');
+
+            if (arr.length == 1) {
+                showMyWindow("#myWin", "修改用户", "/SysUser/Edit/" + arr[0].USER_ID, 726, 366);
+
+            } else {
+                $.messager.alert('操作提示', '请选择一条数据!', 'warning');
+            }
+            return false;
+
+        };
+        //删除的按钮
+        function flexiDelete() {
+
+            var rows = $('#flexigridData').datagrid('getSelections');
+            if (rows.length == 0) {
+                $.messager.alert('操作提示', '请选择数据!', 'warning');
+                return false;
+            }
+
+            var arr = [];
+            for (var i = 0; i < rows.length; i++) {
+                arr.push(rows[i].USER_ID);
+            }
+
+            $.messager.confirm('操作提示', "确认删除这 " + arr.length + " 项吗？", function (r) {
+                if (r) {
+                    $.post("/SysUser/Delete", { query: arr.join(",") }, function (res) {
+                        if (res == "OK") {
+                            //移除删除的数据
+                            $("#flexigridData").datagrid("reload");
+                            $("#flexigridData").datagrid("clearSelections");
+                            $.messager.alert('操作提示', '删除成功!', 'info');
+                        }
+                        else {
+                            if (res == "") {
+                                $.messager.alert('操作提示', '删除失败!请查看该数据与其他模块下的信息的关联，或联系管理员。', 'info');
+                            }
+                            else {
+                                $.messager.alert('操作提示', res, 'info');
+                            }
+                        }
+                    });
+                }
+            });
+
+        };
+    </script>    
+}

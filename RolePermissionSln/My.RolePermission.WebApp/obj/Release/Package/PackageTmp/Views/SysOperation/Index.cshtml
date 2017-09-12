@@ -1,0 +1,229 @@
+﻿@model My.RolePermission.Model.SMFUNCTB
+@using My.RolePermission.BLL;
+@using My.RolePermission.Common;
+@{
+    ViewBag.Title = "操作管理";
+}
+<div id="content" region="center" fit="true">
+ <div id="divQuery" style="padding: 5px; font-size: 12px;" title="查询列表" class="easyui-toolbar">
+    <span>@Html.LabelFor(model => model.FUNC_NAME)</span><input type='text' id='FUNC_NAME' class="easyui-textbox"/>
+    <span>@Html.LabelFor(model => model.STATUS)</span> <span>@Html.DropDownListFor(model => model.STATUS,SelectListClass.GetStatus(true),new{@class="easyui-combobox" })</span>
+    <a href="javascript:flexiQuery()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+    <a href="javascript:resetData()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'">重置</a>
+           </div>
+        <table id="flexigridData">
+        </table> 
+    <input id="hidtreeid" type="hidden" />
+    <input id="SysMenuIdOld" type="hidden" />
+</div>
+    <!-------------------------创建和修改层---------------------------------->
+<div id="myWin"></div>
+@section scripts{
+        <script type="text/javascript">
+            //回车触发查询
+            $(function () {
+                document.onkeydown = function (e) {
+                    var ev = document.all ? window.event : e;
+                    if (ev.keyCode == 13) {
+                        flexiQuery();
+                    }
+                }
+            });
+            $(function () {
+                var flag = window.location.search;
+                var isSingleSelect = true;
+                if (flag == "?view=1") {
+                    isSingleSelect = false;
+                }
+                $('#flexigridData').datagrid({
+                    title: '操作', //列表的标题
+                    iconCls: 'icon-site',
+                    width: 'auto',
+                    height: 'auto',
+                    singleSelect: isSingleSelect, //是否单选行
+                    selectOnCheck: true, //选中行时复选框选中
+                    checkOnSelect: true, //选中复选框时选中行
+                    nowrap: false,
+                    striped: true,
+                    collapsible: true,
+                    url: 'SysOperation/GetData', //获取数据的url
+                    sortName: 'FUNC_ID',
+                    sortOrder: 'desc',
+                    remoteSort: true, //定义是否从服务器给数据排序。
+                    idField: 'FUNC_ID',
+
+                    toolbar: [
+                    ],
+                    columns: [[
+                        { field: 'ck', checkbox: true }, //复选框
+                        { field: 'FUNC_NAME', title: '@Html.LabelFor(model => model.FUNC_NAME)', width: 135, sortable: true }
+					, { field: 'EVENT_NAME', title: '@Html.LabelFor(model => model.EVENT_NAME)', width: 135, sortable: true }
+					, { field: 'ICONIC', title: '@Html.LabelFor(model => model.ICONIC)', width: 135 }
+                    , { field: 'CLASS_NAME', title: '@Html.LabelFor(model => model.CLASS_NAME)', width: 135 }
+					, { field: 'ORDERCODE', title: '@Html.LabelFor(model => model.ORDERCODE)', width: 60, sortable: true }
+                	, { field: 'SM_SYSTEM', title: '@Html.LabelFor(model => model.SM_SYSTEM)', width: 100, sortable: true }
+                    , { field: 'STATUS', title: '@Html.LabelFor(model => model.STATUS)', width: 100, sortable: true }
+                   , { field: 'FUNC_CODE', title: '@Html.LabelFor(model => model.FUNC_CODE)', width: 100, sortable: true }
+					, { field: 'PARENTFUNC_CODE', title: '@Html.LabelFor(model => model.PARENTFUNC_CODE)', width: 100, sortable: true }
+                //, { display: '@Html.LabelFor(model => model.SysMenuId)', name: 'SysMenuId', width: 135, sortable: false, align: 'left' }
+
+                ]],
+                pagination: true,
+                rownumbers: true
+
+            });
+
+            //如果列表页出现在弹出框中，则只显示查询和选择按钮 
+            var parent = window.dialogArguments; //获取父页面
+            //异步获取按钮          
+            if (parent == "undefined" || parent == null) {
+                //首先获取iframe标签的id值
+                var iframeid = window.parent.$('#tabs').tabs('getSelected').find('iframe').attr("id");
+
+                //然后关闭AJAX相应的缓存
+                $.ajaxSetup({
+                    cache: false
+                });
+
+                //获取按钮值
+                $.getJSON("../Home/GetToolbar", { id: iframeid }, function (data) {
+                    if (data == null) {
+                        return;
+                    }
+                    $('#flexigridData').datagrid("addToolbarItem", data);
+
+                });
+
+            } else {
+                //添加选择按钮
+                $('#flexigridData').datagrid("addToolbarItem", [{ "text": "选择", "iconCls": "icon-ok", handler: function () { flexiSelect(); } }]);
+            }
+
+            $('#myTree').tree({
+                url: '/SysMenuTree/GetTree',
+                onClick: function (node) {
+                    if (node != null && node.id != null && node.id != "undefined") {
+                        if (node.iconCls != null) {//&& node.iconCls == 'icon-ok'
+                            $("#hidtreeid").val('');
+                            $("#flexigridData").datagrid("load"); //根目录刷新  
+                        } else {
+                            $("#hidtreeid").val(node.id);
+                            $("#flexigridData").datagrid("load", { id: node.id }); //子节点刷新
+                        }
+
+                    }
+                },
+                onBeforeLoad: function (node, param) {
+                    if (node) {
+                        param.parentid = node.id;
+                    }
+                }
+            });
+        });
+        //“查询”按钮，弹出查询框
+        function flexiQuery() {
+            //执行查询                        
+            $('#flexigridData').datagrid('reload', { FUNC_NAME: $("#FUNC_NAME").val(), STATUS: $("#STATUS").combobox('getValue') });
+        };
+        function resetData() {
+            $("#FUNC_NAME").textbox('setValue', '')//赋值 
+            $("#STATUS").combobox('setValue', '')
+        }
+        //“选择”按钮，在其他（与此页面有关联）的页面中，此页面以弹出框的形式出现，选择页面中的数据
+        function flexiSelect() {
+            var rows = $('#flexigridData').datagrid('getSelections');
+            if (rows.length == 0) {
+                $.messager.alert('操作提示', '请选择数据!', 'warning');
+                return false;
+            }
+
+            var arr = [];
+            for (var i = 0; i < rows.length; i++) {
+                arr.push(rows[i].FUNC_ID);
+            }
+            arr.push("^");
+            for (var j = 0; j < rows.length; j++) {
+                arr.push(rows[j].FUNC_NAME);
+            }
+
+            //主键列和显示列之间用 ^ 分割   每一项用 , 分割
+            if (arr.length > 0) {//一条数据和多于一条
+                returnParent(arr.join("&")); //每一项用 & 分割
+            }
+        }
+        //导航到查看详细的按钮
+        function getView() {
+            var arr = $('#flexigridData').datagrid('getSelections');
+            if (arr.length == 1) {
+                window.location.href = "/SysOperation/Details/" + arr[0].FUNC_ID;
+
+            } else {
+                $.messager.alert('操作提示', '请选择一条数据!', 'warning');
+            }
+            return false;
+        }
+        //导航到创建的按钮
+        function flexiCreate() {
+            showMyWindow("#myWin", "操作创建", "/SysOperation/Create", 680, 304);
+            return false;
+        }
+        //导航到修改的按钮
+        function flexiModify() {
+            var arr = $('#flexigridData').datagrid('getSelections');
+            if (arr.length == 1) {
+                showMyWindow("#myWin", "操作修改", "/SysOperation/Edit/" + arr[0].FUNC_ID, 680, 304);
+
+            } else {
+                $.messager.alert('操作提示', '请选择一条数据!', 'warning');
+            }
+            return false;
+
+        };
+        //删除的按钮
+        function flexiDelete() {
+
+            var rows = $('#flexigridData').datagrid('getSelections');
+            if (rows.length == 0) {
+                $.messager.alert('操作提示', '请选择数据!', 'warning');
+                return false;
+            }
+
+            var arr = [];
+            for (var i = 0; i < rows.length; i++) {
+                arr.push(rows[i].FUNC_ID);
+            }
+
+            $.messager.confirm('操作提示', "确认删除这 " + arr.length + " 项吗？", function (r) {
+                if (r) {
+                    $.post("/SysOperation/Delete", { query: arr.join(",") }, function (res) {
+                        if (res == "OK") {
+                            //移除删除的数据
+                            $("#flexigridData").datagrid("reload");
+                            $("#flexigridData").datagrid("clearSelections");
+                            $.messager.alert('操作提示', '删除成功!', 'info');
+                        }
+                        else {
+                            if (res == "") {
+                                $.messager.alert('操作提示', '删除失败!请查看该数据与其他模块下的信息的关联，或联系管理员。', 'info');
+                            }
+                            else {
+                                $.messager.alert('操作提示', res, 'info');
+                            }
+                        }
+                    });
+                }
+            });
+        };
+
+        //设置
+        function setSysMenu() {
+            var arr = $('#flexigridData').datagrid('getSelections');
+            if (arr.length == 1) {
+                window.location.href = "../SysOperation/SetSysMenu/" + arr[0].FUNC_ID;
+            } else {
+                $.messager.alert('操作提示', '请选择一条数据!', 'warning');
+            }
+            return false;
+        }
+    </script>
+}

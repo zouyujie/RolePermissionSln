@@ -1,0 +1,46 @@
+﻿@model My.RolePermission.Model.LogOnModel
+@{
+    ViewBag.Title = "登录 - 通用角色权限系统";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@ViewBag.Title</title>
+@Styles.Render("~/Content/Login/css")
+    <script type="text/javascript">
+        function RefreshValidateCode(obj) {
+            obj.src = "/Login/ShowValidateCode/" + Math.floor(Math.random() * 10000);
+        }
+    </script>
+</head>
+<body>
+<div class="signin">
+	<div class="signin-head"><img src="/Content/images/test/head_120.png" class="img-circle" ></div>
+	<form class="form-signin" role="form" method="post">
+         @Html.AntiForgeryToken()
+        @Html.TextBoxFor(m => m.PersonName, new{ @type="text", @class="form-control", @placeholder="用户名", @required=true,@autofocus=true})
+        @Html.PasswordFor(m => m.Password, new { @class="form-control", @placeholder="密码", @required=true})
+          <div class="form-group">
+    <div class="col-sm-10" style="padding-left:0px;">
+    <input type="code" name="ValidateCode" class="form-control" placeholder="验证码" aria-describedby="inputGroupSuccess1Status" required />
+    </div>
+   <div class="col-sm-2" style="padding-left:0px;"><img id="imgCode" alt="验证码" title="刷新验证码" onclick="RefreshValidateCode(this);" style="cursor: pointer;width:50px;height:45px;" src="/Login/ShowValidateCode"/></div>
+  </div>
+		<button class="btn btn-lg btn-warning btn-block" type="submit">登录</button>
+		<label class="checkbox">
+             @Html.CheckBoxFor(m=>m.RememberMe,"记住我")
+             @Html.LabelFor(m=>m.RememberMe)
+			 <span id="errorMsg" style="font-size:14px;color:red">@Html.ValidationMessage("Error_PersonLogin")</span>
+		</label>
+	</form>
+</div>
+<div style="text-align:center;">
+<p>技术支持：邹琼俊<a href="http://www.cnblogs.com/jiekzou/" target="_blank">我的博客</a></p>
+</div>
+</body>
+</html>
+

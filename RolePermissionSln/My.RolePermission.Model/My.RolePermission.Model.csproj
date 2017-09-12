@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{04E332D7-42BF-441D-8495-9676E975DFB4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>My.RolePermission.Model</RootNamespace>
+    <AssemblyName>My.RolePermission.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MetadataModel\SMFIELD.cs" />
+    <Compile Include="MetadataModel\SMFUNCTB.cs" />
+    <Compile Include="MetadataModel\SMLOG.cs" />
+    <Compile Include="MetadataModel\SMMENUTB.cs" />
+    <Compile Include="MetadataModel\SMROLETB.cs" />
+    <Compile Include="MetadataModel\SMUSERTB.cs" />
+    <Compile Include="RolePermission.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RolePermission.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RolePermission.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RolePermission.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RolePermission.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RolePermission.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchParam\BaseParam.cs" />
+    <Compile Include="SearchParam\FieldParam.cs" />
+    <Compile Include="SearchParam\LogParam.cs" />
+    <Compile Include="SearchParam\MenuParam.cs" />
+    <Compile Include="SearchParam\OperationParam.cs" />
+    <Compile Include="SearchParam\OrderByExt.cs" />
+    <Compile Include="SearchParam\PredicateBuilder.cs" />
+    <Compile Include="SearchParam\RoleParam.cs" />
+    <Compile Include="SearchParam\UserInfoParam.cs" />
+    <Compile Include="SMFIELD.cs">
+      <DependentUpon>RolePermission.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMFUNCTB.cs">
+      <DependentUpon>RolePermission.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMLOG.cs">
+      <DependentUpon>RolePermission.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMMENUROLEFUNCTB.cs">
+      <DependentUpon>RolePermission.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMMENUTB.cs">
+      <DependentUpon>RolePermission.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMROLETB.cs">
+      <DependentUpon>RolePermission.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SMUSERTB.cs">
+      <DependentUpon>RolePermission.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Account.cs" />
+    <Compile Include="ViewModel\ChangePasswordModel.cs" />
+    <Compile Include="ViewModel\LogOnModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Easyui.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <EntityDeploy Include="RolePermission.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RolePermission.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="RolePermission.edmx.diagram">
+      <DependentUpon>RolePermission.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enum\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\My.RolePermission.Common\My.RolePermission.Common.csproj">
+      <Project>{9a85bb22-2255-44ae-9df4-f7dcf7699dd6}</Project>
+      <Name>My.RolePermission.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RolePermission.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RolePermission.edmx</DependentUpon>
+      <LastGenOutput>RolePermission.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="RolePermission.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RolePermission.edmx</DependentUpon>
+      <LastGenOutput>RolePermission.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

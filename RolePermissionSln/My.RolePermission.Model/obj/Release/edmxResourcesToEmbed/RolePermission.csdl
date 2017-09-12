@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RolePermissionModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="RolePermissionEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="SMFIELD" EntityType="RolePermissionModel.SMFIELD" />
+    <EntitySet Name="SMFUNCTB" EntityType="RolePermissionModel.SMFUNCTB" />
+    <EntitySet Name="SMLOG" EntityType="RolePermissionModel.SMLOG" />
+    <EntitySet Name="SMMENUROLEFUNCTB" EntityType="RolePermissionModel.SMMENUROLEFUNCTB" />
+    <EntitySet Name="SMMENUTB" EntityType="RolePermissionModel.SMMENUTB" />
+    <EntitySet Name="SMROLETB" EntityType="RolePermissionModel.SMROLETB" />
+    <EntitySet Name="SMUSERTB" EntityType="RolePermissionModel.SMUSERTB" />
+    <AssociationSet Name="FK_SMFIELD_ID" Association="RolePermissionModel.FK_SMFIELD_ID">
+      <End Role="SMFIELD" EntitySet="SMFIELD" />
+      <End Role="SMFIELD1" EntitySet="SMFIELD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMMENUROLEFUNCTB_SMFUNCTB" Association="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMFUNCTB">
+      <End Role="SMFUNCTB" EntitySet="SMFUNCTB" />
+      <End Role="SMMENUROLEFUNCTB" EntitySet="SMMENUROLEFUNCTB" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMMENUROLEFUNCTB_SMMENUTB" Association="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMMENUTB">
+      <End Role="SMMENUTB" EntitySet="SMMENUTB" />
+      <End Role="SMMENUROLEFUNCTB" EntitySet="SMMENUROLEFUNCTB" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMMENUROLEFUNCTB_SMROLETB" Association="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMROLETB">
+      <End Role="SMROLETB" EntitySet="SMROLETB" />
+      <End Role="SMMENUROLEFUNCTB" EntitySet="SMMENUROLEFUNCTB" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMMENUTB_ID" Association="RolePermissionModel.FK_SMMENUTB_ID">
+      <End Role="SMMENUTB" EntitySet="SMMENUTB" />
+      <End Role="SMMENUTB1" EntitySet="SMMENUTB" />
+    </AssociationSet>
+    <AssociationSet Name="SMMENUFUNCTB" Association="RolePermissionModel.SMMENUFUNCTB">
+      <End Role="SMFUNCTB" EntitySet="SMFUNCTB" />
+      <End Role="SMMENUTB" EntitySet="SMMENUTB" />
+    </AssociationSet>
+    <AssociationSet Name="SMUSERROLETB" Association="RolePermissionModel.SMUSERROLETB">
+      <End Role="SMROLETB" EntitySet="SMROLETB" />
+      <End Role="SMUSERTB" EntitySet="SMUSERTB" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="SMFIELD">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MYTEXTS" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PARENTID" Type="Int32" />
+    <Property Name="MYTABLES" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MYCOLUMS" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="SORT" Type="Decimal" Precision="6" Scale="0" />
+    <Property Name="REMARK" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="CREATETIME" Type="DateTime" Precision="3" />
+    <Property Name="CREATEPERSON" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="UPDATETIME" Type="DateTime" Precision="3" />
+    <Property Name="UPDATEPERSON" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MYVALUES" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="SMFIELD1" Relationship="RolePermissionModel.FK_SMFIELD_ID" FromRole="SMFIELD" ToRole="SMFIELD1" />
+    <NavigationProperty Name="SMFIELD2" Relationship="RolePermissionModel.FK_SMFIELD_ID" FromRole="SMFIELD1" ToRole="SMFIELD" />
+  </EntityType>
+  <EntityType Name="SMFUNCTB">
+    <Key>
+      <PropertyRef Name="FUNC_ID" />
+    </Key>
+    <Property Name="FUNC_ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="FUNC_CODE" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+    <Property Name="FUNC_NAME" Type="String" MaxLength="64" Unicode="true" FixedLength="false" />
+    <Property Name="EVENT_NAME" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="STATUS" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <Property Name="PARENTFUNC_CODE" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+    <Property Name="CLASS_NAME" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="ORDERCODE" Type="Int32" />
+    <Property Name="SM_SYSTEM" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="IMGINDEX" Type="Int32" />
+    <Property Name="ICONIC" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="SMMENUROLEFUNCTB" Relationship="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMFUNCTB" FromRole="SMFUNCTB" ToRole="SMMENUROLEFUNCTB" />
+    <NavigationProperty Name="SMMENUTB" Relationship="RolePermissionModel.SMMENUFUNCTB" FromRole="SMFUNCTB" ToRole="SMMENUTB" />
+  </EntityType>
+  <EntityType Name="SMLOG">
+    <Key>
+      <PropertyRef Name="LOG_ID" />
+    </Key>
+    <Property Name="LOG_ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="LOG_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="USER_ID" Type="Int32" />
+    <Property Name="FUNC_CODE" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+    <Property Name="OPERATION_TYPE" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <Property Name="REMARK" Type="String" MaxLength="2000" Unicode="true" FixedLength="false" />
+    <Property Name="SYSTEMCODE" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="CLASSNAME" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="IMPORTANCEDEGREE" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="SMMENUROLEFUNCTB">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MENUID" Type="Int32" />
+    <Property Name="FUNC_ID" Type="Int32" />
+    <Property Name="ROLEID" Type="Int32" />
+    <NavigationProperty Name="SMFUNCTB" Relationship="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMFUNCTB" FromRole="SMMENUROLEFUNCTB" ToRole="SMFUNCTB" />
+    <NavigationProperty Name="SMMENUTB" Relationship="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMMENUTB" FromRole="SMMENUROLEFUNCTB" ToRole="SMMENUTB" />
+    <NavigationProperty Name="SMROLETB" Relationship="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMROLETB" FromRole="SMMENUROLEFUNCTB" ToRole="SMROLETB" />
+  </EntityType>
+  <EntityType Name="SMMENUTB">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="PARENTID" Type="Int32" />
+    <Property Name="URL" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="ICONIC" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="SORT" Type="Int32" />
+    <Property Name="REMARK" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="STATE" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="CREATEPERSON" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CREATETIME" Type="DateTime" Precision="3" />
+    <Property Name="UPDATETIME" Type="DateTime" Precision="3" />
+    <Property Name="UPDATEPERSON" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ISLEAF" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="MENULEVEL" Type="Int32" />
+    <NavigationProperty Name="SMMENUROLEFUNCTB" Relationship="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMMENUTB" FromRole="SMMENUTB" ToRole="SMMENUROLEFUNCTB" />
+    <NavigationProperty Name="SMMENUTB1" Relationship="RolePermissionModel.FK_SMMENUTB_ID" FromRole="SMMENUTB" ToRole="SMMENUTB1" />
+    <NavigationProperty Name="SMMENUTB2" Relationship="RolePermissionModel.FK_SMMENUTB_ID" FromRole="SMMENUTB1" ToRole="SMMENUTB" />
+    <NavigationProperty Name="SMFUNCTB" Relationship="RolePermissionModel.SMMENUFUNCTB" FromRole="SMMENUTB" ToRole="SMFUNCTB" />
+  </EntityType>
+  <EntityType Name="SMROLETB">
+    <Key>
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="ROLE_ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ROLE_NAME" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="CREATION_TIME" Type="DateTime" Precision="3" />
+    <Property Name="CREATION_USER" Type="Int32" />
+    <Property Name="UPDATE_TIME" Type="DateTime" Precision="3" />
+    <Property Name="UPDATE_USER" Type="Int32" />
+    <Property Name="REMARK" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="STATUS" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="SMMENUROLEFUNCTB" Relationship="RolePermissionModel.FK_SMMENUROLEFUNCTB_SMROLETB" FromRole="SMROLETB" ToRole="SMMENUROLEFUNCTB" />
+    <NavigationProperty Name="SMUSERTB" Relationship="RolePermissionModel.SMUSERROLETB" FromRole="SMROLETB" ToRole="SMUSERTB" />
+  </EntityType>
+  <EntityType Name="SMUSERTB">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="U_ID" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="U_PASSWORD" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="GENDER" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <Property Name="USER_NAME" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="CREATION_TIME" Type="DateTime" Precision="3" />
+    <Property Name="CREATION_USER" Type="Int32" />
+    <Property Name="UPDATE_TIME" Type="DateTime" Precision="3" />
+    <Property Name="UPDATE_USER" Type="Int32" />
+    <Property Name="STATUS" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <Property Name="TYPE_ID" Type="Int32" />
+    <Property Name="COMPONENT_ID" Type="Int32" />
+    <Property Name="COMMUN_ID" Type="Int32" />
+    <Property Name="GUILD_CODE" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="UNPAYAMT" Type="Int32" />
+    <Property Name="CONIFGUSEFUL" Type="String" MaxLength="1" Unicode="true" FixedLength="false" />
+    <Property Name="FLAG" Type="Int32" />
+    <Property Name="ID_NO" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="ISAUDIT" Type="Int32" />
+    <Property Name="AUDITPASSWORD" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="SMROLETB" Relationship="RolePermissionModel.SMUSERROLETB" FromRole="SMUSERTB" ToRole="SMROLETB" />
+  </EntityType>
+  <Association Name="FK_SMFIELD_ID">
+    <End Role="SMFIELD" Type="RolePermissionModel.SMFIELD" Multiplicity="0..1" />
+    <End Role="SMFIELD1" Type="RolePermissionModel.SMFIELD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SMFIELD">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SMFIELD1">
+        <PropertyRef Name="PARENTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMMENUROLEFUNCTB_SMFUNCTB">
+    <End Role="SMFUNCTB" Type="RolePermissionModel.SMFUNCTB" Multiplicity="0..1" />
+    <End Role="SMMENUROLEFUNCTB" Type="RolePermissionModel.SMMENUROLEFUNCTB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SMFUNCTB">
+        <PropertyRef Name="FUNC_ID" />
+      </Principal>
+      <Dependent Role="SMMENUROLEFUNCTB">
+        <PropertyRef Name="FUNC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMMENUROLEFUNCTB_SMMENUTB">
+    <End Role="SMMENUTB" Type="RolePermissionModel.SMMENUTB" Multiplicity="0..1" />
+    <End Role="SMMENUROLEFUNCTB" Type="RolePermissionModel.SMMENUROLEFUNCTB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SMMENUTB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SMMENUROLEFUNCTB">
+        <PropertyRef Name="MENUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMMENUROLEFUNCTB_SMROLETB">
+    <End Role="SMROLETB" Type="RolePermissionModel.SMROLETB" Multiplicity="0..1" />
+    <End Role="SMMENUROLEFUNCTB" Type="RolePermissionModel.SMMENUROLEFUNCTB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SMROLETB">
+        <PropertyRef Name="ROLE_ID" />
+      </Principal>
+      <Dependent Role="SMMENUROLEFUNCTB">
+        <PropertyRef Name="ROLEID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMMENUTB_ID">
+    <End Role="SMMENUTB" Type="RolePermissionModel.SMMENUTB" Multiplicity="0..1" />
+    <End Role="SMMENUTB1" Type="RolePermissionModel.SMMENUTB" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SMMENUTB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SMMENUTB1">
+        <PropertyRef Name="PARENTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SMMENUFUNCTB">
+    <End Role="SMFUNCTB" Type="RolePermissionModel.SMFUNCTB" Multiplicity="*" />
+    <End Role="SMMENUTB" Type="RolePermissionModel.SMMENUTB" Multiplicity="*" />
+  </Association>
+  <Association Name="SMUSERROLETB">
+    <End Role="SMROLETB" Type="RolePermissionModel.SMROLETB" Multiplicity="*" />
+    <End Role="SMUSERTB" Type="RolePermissionModel.SMUSERTB" Multiplicity="*" />
+  </Association>
+</Schema>

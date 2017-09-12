@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "SetSysMenu";
+}
+
+ <script type="text/javascript">
+     $(function () {
+         var h = document.documentElement.clientHeight - 26;
+         $('#flexigridData').treegrid({
+             title: ' 当前角色是：@ViewData["myname"]',
+             iconCls: 'icon-site',
+             url: '/SysMenu/GetAllMetadata2/' + $("#SysRoleId").val(),
+             idField: 'ID',
+             treeField: 'NAME',
+             height:h,
+             rownumbers: true,
+
+             toolbar: [
+                    {
+                        text: '保存',
+                        iconCls: 'icon-save',
+                        handler: function () {
+                            return getView();
+                        }
+                    }, {
+                        text: '全选',
+                        iconCls: 'icon-ok',
+                        handler: function () {
+                            return flexiCreate();
+                        }
+                    }, {
+                        text: '全不选',
+                        iconCls: 'icon-remove',
+                        handler: function () {
+                            return flexiDelete();
+                        }
+                    }, {
+                        text: '取消',
+                        iconCls: 'icon-undo',
+                        handler: function () {
+                            return flexiModify();
+                        }
+                    }],
+
+             columns: [[
+
+                    	{ field: 'NAME', title: '菜单', width: 205
+                                        , formatter: function (value, rec) {
+                                            if (value) {
+                                                return '<input id="' + rec.ID + '" type="checkbox">' + (value);
+                                            }
+                                        }
+                    	}
+					, { field: 'isCheck', title: '操作', width: 599, formatter: function (value, rec) {
+					    if (value) {
+					        var index = value.split(","); //分割符 , 的位置
+					        if (index[0] == null || index[0] == "undefined" || index[0].length < 1) {
+					            return;
+					        }
+					        var content = ""; //需要添加到check中的内容 
+					        for (var i = 0; i < index.length; i++) {
+					            var view = index[i].split('^'); //显示值
+					            if (view != null) {
+					                content += '<input id="' + rec.ID + '^' + view[0] + '" type="checkbox">' + view[1];
+					            }
+					        }
+					        return content;
+					    }
+					}
+					}
+				    ]],
+             onLoadSuccess: function (row, data) {
+                 if (data) {
+                     $.ajaxSetup({
+                         cache: false //关闭AJAX相应的缓存
+                     });
+                     $.getJSON('/SysMenu/GetAllMetadata23/' + $("#SysRoleId").val(), function (checks) {
+                         $.each(checks, function (i, item) {
+                             var c = document.getElementById(item);
+                             c.checked = true;
+                         });
+                     });
+
+                 }
+             }
+
+         });
+     });
+     //保存
+     function getView() {
+         var datas = '';
+         $("input[type='checkbox']").each(function () {
+             if ($(this).is(":checked"))
+                 datas += ',' + $(this).attr('id');
+         });
+         $.post("/SysRole/Save", { id: $("#SysRoleId").val(), ids: datas }, function (res) {
+             if (res == "OK") {
+                 $.messager.alert('操作提示', '保存成功!', 'info');
+             }
+             else {
+                 if (res == "") {
+                     $.messager.alert('操作提示', '保存失败!请联系管理员。', 'info');
+                 }
+                 else {
+                     $.messager.alert('操作提示', res, 'info');
+                 }
+             }
+         });
+         return false;
+     }
+     //全选
+     function flexiCreate() {
+
+         $("input[type='checkbox']").each(function () {
+             $(this).attr("checked", true);
+         });
+
+         return false;
+     }
+     //全不选
+     function flexiModify() {
+         window.location.href = "/SysRole";
+         return false;
+     };
+     //取消
+     function flexiDelete() {
+         $("input[type='checkbox']").each(function () {
+             $(this).attr("checked", false);
+         });
+         return false;
+     };
+    </script>
+<table id="flexigridData">
+</table>
+    <input type="hidden" id="SysRoleId" value="@ViewData["myid"]" />

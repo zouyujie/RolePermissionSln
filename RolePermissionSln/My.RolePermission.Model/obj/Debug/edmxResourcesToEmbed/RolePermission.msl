@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RolePermissionModelStoreContainer" CdmEntityContainer="RolePermissionEntities1">
+    <EntitySetMapping Name="SMFIELD">
+      <EntityTypeMapping TypeName="RolePermissionModel.SMFIELD">
+        <MappingFragment StoreEntitySet="SMFIELD">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MYTEXTS" ColumnName="MYTEXTS" />
+          <ScalarProperty Name="PARENTID" ColumnName="PARENTID" />
+          <ScalarProperty Name="MYTABLES" ColumnName="MYTABLES" />
+          <ScalarProperty Name="MYCOLUMS" ColumnName="MYCOLUMS" />
+          <ScalarProperty Name="SORT" ColumnName="SORT" />
+          <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+          <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+          <ScalarProperty Name="CREATEPERSON" ColumnName="CREATEPERSON" />
+          <ScalarProperty Name="UPDATETIME" ColumnName="UPDATETIME" />
+          <ScalarProperty Name="UPDATEPERSON" ColumnName="UPDATEPERSON" />
+          <ScalarProperty Name="MYVALUES" ColumnName="MYVALUES" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMFUNCTB">
+      <EntityTypeMapping TypeName="RolePermissionModel.SMFUNCTB">
+        <MappingFragment StoreEntitySet="SMFUNCTB">
+          <ScalarProperty Name="FUNC_ID" ColumnName="FUNC_ID" />
+          <ScalarProperty Name="FUNC_CODE" ColumnName="FUNC_CODE" />
+          <ScalarProperty Name="FUNC_NAME" ColumnName="FUNC_NAME" />
+          <ScalarProperty Name="EVENT_NAME" ColumnName="EVENT_NAME" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="PARENTFUNC_CODE" ColumnName="PARENTFUNC_CODE" />
+          <ScalarProperty Name="CLASS_NAME" ColumnName="CLASS_NAME" />
+          <ScalarProperty Name="ORDERCODE" ColumnName="ORDERCODE" />
+          <ScalarProperty Name="SM_SYSTEM" ColumnName="SM_SYSTEM" />
+          <ScalarProperty Name="ICONIC" ColumnName="ICONIC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMLOG">
+      <EntityTypeMapping TypeName="RolePermissionModel.SMLOG">
+        <MappingFragment StoreEntitySet="SMLOG">
+          <ScalarProperty Name="LOG_ID" ColumnName="LOG_ID" />
+          <ScalarProperty Name="LOG_DATETIME" ColumnName="LOG_DATETIME" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="FUNC_CODE" ColumnName="FUNC_CODE" />
+          <ScalarProperty Name="OPERATION_TYPE" ColumnName="OPERATION_TYPE" />
+          <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+          <ScalarProperty Name="SYSTEMCODE" ColumnName="SYSTEMCODE" />
+          <ScalarProperty Name="CLASSNAME" ColumnName="CLASSNAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMMENUROLEFUNCTB">
+      <EntityTypeMapping TypeName="RolePermissionModel.SMMENUROLEFUNCTB">
+        <MappingFragment StoreEntitySet="SMMENUROLEFUNCTB">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MENUID" ColumnName="MENUID" />
+          <ScalarProperty Name="FUNC_ID" ColumnName="FUNC_ID" />
+          <ScalarProperty Name="ROLEID" ColumnName="ROLEID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMMENUTB">
+      <EntityTypeMapping TypeName="RolePermissionModel.SMMENUTB">
+        <MappingFragment StoreEntitySet="SMMENUTB">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="PARENTID" ColumnName="PARENTID" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="ICONIC" ColumnName="ICONIC" />
+          <ScalarProperty Name="SORT" ColumnName="SORT" />
+          <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="CREATEPERSON" ColumnName="CREATEPERSON" />
+          <ScalarProperty Name="CREATETIME" ColumnName="CREATETIME" />
+          <ScalarProperty Name="UPDATETIME" ColumnName="UPDATETIME" />
+          <ScalarProperty Name="UPDATEPERSON" ColumnName="UPDATEPERSON" />
+          <ScalarProperty Name="ISLEAF" ColumnName="ISLEAF" />
+          <ScalarProperty Name="MENULEVEL" ColumnName="MENULEVEL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMROLETB">
+      <EntityTypeMapping TypeName="RolePermissionModel.SMROLETB">
+        <MappingFragment StoreEntitySet="SMROLETB">
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
+          <ScalarProperty Name="CREATION_TIME" ColumnName="CREATION_TIME" />
+          <ScalarProperty Name="CREATION_USER" ColumnName="CREATION_USER" />
+          <ScalarProperty Name="UPDATE_TIME" ColumnName="UPDATE_TIME" />
+          <ScalarProperty Name="UPDATE_USER" ColumnName="UPDATE_USER" />
+          <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMUSERTB">
+      <EntityTypeMapping TypeName="RolePermissionModel.SMUSERTB">
+        <MappingFragment StoreEntitySet="SMUSERTB">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="U_ID" ColumnName="U_ID" />
+          <ScalarProperty Name="U_PASSWORD" ColumnName="U_PASSWORD" />
+          <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+          <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+          <ScalarProperty Name="CREATION_TIME" ColumnName="CREATION_TIME" />
+          <ScalarProperty Name="CREATION_USER" ColumnName="CREATION_USER" />
+          <ScalarProperty Name="UPDATE_TIME" ColumnName="UPDATE_TIME" />
+          <ScalarProperty Name="UPDATE_USER" ColumnName="UPDATE_USER" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="COMPONENT_ID" ColumnName="COMPONENT_ID" />
+          <ScalarProperty Name="ISAUDIT" ColumnName="ISAUDIT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="SMMENUFUNCTB" TypeName="RolePermissionModel.SMMENUFUNCTB" StoreEntitySet="SMMENUFUNCTB">
+      <EndProperty Name="SMFUNCTB">
+        <ScalarProperty Name="FUNC_ID" ColumnName="FUNC_ID" />
+      </EndProperty>
+      <EndProperty Name="SMMENUTB">
+        <ScalarProperty Name="ID" ColumnName="MENUID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SMUSERROLETB" TypeName="RolePermissionModel.SMUSERROLETB" StoreEntitySet="SMUSERROLETB">
+      <EndProperty Name="SMROLETB">
+        <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+      </EndProperty>
+      <EndProperty Name="SMUSERTB">
+        <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
